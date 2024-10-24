@@ -1,4 +1,5 @@
 ﻿using System;
+using Bennet.Util;
 using UnityEngine;
 
 namespace CentrifugeGravity
@@ -29,7 +30,8 @@ namespace CentrifugeGravity
                     break;
             }
 
-            
+            rb.rotation = (-gravityDirection).GetDirectionDeg();
+
         }
     }
 }
