@@ -62,30 +62,30 @@ public class PlayerActor : MonoBehaviour
                 break;
         }
     }
-    public bool CanMoveHorizontally(float forwardVelocity)
+    public bool CanMoveHorizontally(float forwardSpeed)
     {
-        Vector2 horizontalVelocity = Vector2.down;
+        Vector2 forwardDirection = Vector2.down;
         
         switch (gravityDirection)
         {
             case GravityDirection.Downward:
-                horizontalVelocity = new Vector2(forwardVelocity, 0);
+                forwardDirection = new Vector2(1, 0);
                 break;
             case GravityDirection.Upward:
-                horizontalVelocity = new Vector2(-forwardVelocity, 0);
+                forwardDirection = new Vector2(-1, 0);
                 break;
             case GravityDirection.Leftward:
-                horizontalVelocity = new Vector2(0, -forwardVelocity);
+                forwardDirection = new Vector2(0, -1);
                 break;
             case GravityDirection.Rightward:
-                horizontalVelocity = new Vector2(0, forwardVelocity);
+                forwardDirection = new Vector2(0, 1);
                 break;
         }
-        
+
 
         List<RaycastHit2D> hits = new (5);
         
-        rb.Cast(horizontalVelocity.normalized,hits,forwardVelocity * Time.deltaTime);
+        rb.Cast(forwardDirection,hits,.1f);
         
         foreach (RaycastHit2D hit in hits)
         {
@@ -97,6 +97,21 @@ public class PlayerActor : MonoBehaviour
         return true;
     }
 
+    public void StopMoveHorizontally()
+    {
+        switch (gravityDirection)
+        {
+            case GravityDirection.Downward:
+            case GravityDirection.Upward:
+                rb.velocity = new Vector2(0,rb.velocity.y);
+                break;
+            case GravityDirection.Leftward:
+            case GravityDirection.Rightward:
+                rb.velocity = new Vector2(rb.velocity.x,0);
+                break;
+        }
+    }
+    
     public void Jump(float jumpVelocity)
     {
         switch (gravityDirection)

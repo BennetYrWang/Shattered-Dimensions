@@ -18,12 +18,19 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKey(toRight))
             movement += moveSpeed;
         
+        
+        
         if (movement != 0)
         {
             if (body.CanMoveHorizontally(movement) && illusion.CanMoveHorizontally(movement))
             {
                 body.ApplyHorizontalMove(movement);
                 illusion.ApplyHorizontalMove(movement);
+            }
+            else
+            {
+                body.StopMoveHorizontally();
+                illusion.StopMoveHorizontally();
             }
         }
 
