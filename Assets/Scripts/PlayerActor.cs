@@ -82,9 +82,10 @@ public class PlayerActor : MonoBehaviour
                 break;
         }
 
-
-        List<RaycastHit2D> hits = new (5);
+        forwardDirection *= Mathf.Sign(forwardSpeed);
         
+        List<RaycastHit2D> hits = new (5);
+        Debug.DrawLine(transform.position, forwardDirection + (Vector2)transform.position);
         rb.Cast(forwardDirection,hits,.1f);
         
         foreach (RaycastHit2D hit in hits)
