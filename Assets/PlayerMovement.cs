@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    bool isPlayer1;
     public float moveSpeed = 5f;             // Player's horizontal speed
     public float jumpForce = 7f;             // Jump force applied on the y-axis
     public Transform groundCheck;            // Empty game object placed at the player's feet to detect the ground
@@ -29,7 +30,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");  // Get input from "A/D" or left/right arrow keys
+        float horizontalInput;
+   
+         horizontalInput= Input.GetAxis("Horizontal");
+       // Get input from "A/D" or left/right arrow keys
         Vector2 velocity = rb.velocity;                      // Get current velocity
 
         velocity.x = horizontalInput * moveSpeed;            // Set the x velocity according to input
@@ -45,9 +49,13 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);  // Check if the player is grounded
 
+        
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)        // Check for spacebar press and if grounded
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);  // Apply jump force on the y-axis
         }
     }
+
+  
+   
 }

@@ -8,10 +8,13 @@ public class SwordTrigger : MonoBehaviour
     [SerializeField]
     AttackPlayer playerAttack;
     bool hitOn;
+
+    Collider2D hitCollider;
     // Start is called before the first frame update
     void Start()
     {
-        
+        hitCollider = GetComponent<Collider2D>();
+        hitCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -23,7 +26,7 @@ public class SwordTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && collision.gameObject != transform.parent.gameObject &&hitOn)
+        if (collision.gameObject.tag == "Player" && collision.gameObject != transform.parent.gameObject)
         {
             Health currentHealth= collision.gameObject.GetComponent<Health>();
             currentHealth.Damage(damage);
@@ -33,12 +36,15 @@ public class SwordTrigger : MonoBehaviour
 
     public void hitStart()
     {
+        hitCollider.enabled = true;
         hitOn = true;
         playerAttack.isHitting = true;
+
     }
 
     public void hitEnd()
     {
+        hitCollider.enabled = false;
         hitOn = false;
         playerAttack.isHitting = false;
 
