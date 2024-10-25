@@ -132,6 +132,7 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+ 
     public enum GravityDirection
     {
         Downward, Upward, Leftward, Rightward

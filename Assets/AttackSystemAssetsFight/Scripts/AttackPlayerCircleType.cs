@@ -7,7 +7,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField] Animator swordAnim;
     [SerializeField] float damage;
     [SerializeField] Transform attackPoint;
-    [SerializeField] LayerMask playerLayer;
+    [SerializeField] string playerTag;
     [SerializeField] float attackRadius;
     // Start is called before the first frame update
     void Start()
@@ -28,15 +28,15 @@ public class AttackPlayerCircleType : MonoBehaviour
     {
         swordAnim.SetTrigger("Hit");
 
-        Collider2D[] hitPlayers =Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, playerLayer);
+        Collider2D[] hitPlayers =Physics2D.OverlapCircleAll(attackPoint.position, attackRadius);
 
         foreach( Collider2D player in hitPlayers)
         {
-            if (player.gameObject != gameObject)
+            if (player.gameObject != gameObject && player.CompareTag(playerTag))
             {
-                Health currentHealth = player.gameObject.GetComponent<Health>();
-                if(currentHealth!=null)
-                currentHealth.Damage(damage);
+                HitsHealth currentHealth = player.gameObject.GetComponent<HitsHealth>();
+                if (currentHealth != null)
+                    currentHealth.Hit(gameObject);
             }
            
         }

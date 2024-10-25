@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordTrigger : MonoBehaviour
+public class SwordHitTrigger : MonoBehaviour
 {
     [SerializeField] float damage;
-    [SerializeField]
-    AttackPlayer playerAttack;
-    bool hitOn;
+    PlayerAttackController playerAttack;
+    
 
     Collider2D hitCollider;
     // Start is called before the first frame update
     void Start()
     {
+        playerAttack = transform.parent.GetComponent<PlayerAttackController>();
         hitCollider = GetComponent<Collider2D>();
         hitCollider.enabled = false;
     }
@@ -26,10 +26,12 @@ public class SwordTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && collision.gameObject != transform.parent.gameObject)
+       
+        if ( collision.gameObject.tag== "Player" && collision.gameObject != transform.parent.gameObject)
         {
-            Health currentHealth= collision.gameObject.GetComponent<Health>();
-            currentHealth.Damage(damage);
+
+            HitsHealth currentHealth= collision.gameObject.GetComponent<HitsHealth>();
+            currentHealth.Hit(transform.parent.gameObject);
         }
        
     }
@@ -37,16 +39,17 @@ public class SwordTrigger : MonoBehaviour
     public void hitStart()
     {
         hitCollider.enabled = true;
-        hitOn = true;
         playerAttack.isHitting = true;
+      
 
     }
 
     public void hitEnd()
     {
         hitCollider.enabled = false;
-        hitOn = false;
+
         playerAttack.isHitting = false;
+
 
     }
 }
