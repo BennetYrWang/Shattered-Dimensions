@@ -14,6 +14,9 @@ public class HitsHealth : MonoBehaviour
     Image[] hitsImages;
 
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,19 +34,34 @@ public class HitsHealth : MonoBehaviour
         hitsLeft--;
         if (hitsLeft >= 0)
         {
-            for (int i = 0; i < hitsImages.Length; i++)
-            {
-                if (i > (hitsLeft-1))
-                {
-                    hitsImages[i].enabled = false;
-
-                }
-            }
+            updateUI();
         }
 
         if (hitsLeft == 0)
         {
             AttackGameManager.Instance.playerKilled(gameObject, attacker);
+        }
+    }
+
+    public void resetHealth()
+    {
+        hitsLeft = maxHits;
+        updateUI();
+    }
+
+    void updateUI()
+    {
+        for (int i = 0; i < hitsImages.Length; i++)
+        {
+            if (i > (hitsLeft - 1))
+            {
+                hitsImages[i].enabled = false;
+
+            }
+            else
+            {
+                hitsImages[i].enabled = true;
+            }
         }
     }
 

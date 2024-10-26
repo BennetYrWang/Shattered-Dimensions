@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);  // Check if the player is grounded
 
-        
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)        // Check for spacebar press and if grounded
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);  // Apply jump force on the y-axis

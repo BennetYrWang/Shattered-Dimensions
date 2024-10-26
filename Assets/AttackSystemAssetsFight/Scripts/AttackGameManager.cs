@@ -6,6 +6,7 @@ public class AttackGameManager : MonoBehaviour
 {
     public static AttackGameManager Instance { get; private set; }
 
+    [SerializeField]
     GameObject[] playerBodys;
 
     private void Awake()
@@ -25,7 +26,7 @@ public class AttackGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerBodys = GameObject.FindGameObjectsWithTag("Player");
+        //playerBodys = GameObject.FindGameObjectsWithTag("Player");
     }
 
     // Update is called once per frame
@@ -38,6 +39,10 @@ public class AttackGameManager : MonoBehaviour
     {
         
         Debug.Log(playerBodyDead.name + "Got Killed by" + playerBodyKiller);
-        Destroy(playerBodyDead.transform.parent.gameObject);
+        DimensionManager.Instance.changeDimension(playerBodyKiller==playerBodys[0]);
+        foreach (GameObject player in playerBodys)
+        {
+            player.GetComponent<HitsHealth>().resetHealth();
+        }
     }
 }
