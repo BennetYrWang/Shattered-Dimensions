@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BennetMovementSystem;
 using UnityEngine;
 
 public class DimensionManager : MonoBehaviour
@@ -109,12 +110,12 @@ public class DimensionManager : MonoBehaviour
             case 0:
 
 
-                playerBody[0].gravityDirection = PlayerActor.GravityDirection.Downward;
-                playerBody[1].gravityDirection = PlayerActor.GravityDirection.Downward;
+                playerBody[0].GravityDirection = PlayerActor.GravityType.Downward;
+                playerBody[1].GravityDirection = PlayerActor.GravityType.Downward;
 
-                playerIllusion[0].gravityDirection = PlayerActor.GravityDirection.Leftward;
+                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Leftward;
 
-                playerIllusion[1].gravityDirection = PlayerActor.GravityDirection.Rightward;
+                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Rightward;
 
 
                 playerBody[0].gameObject.transform.position = spawnPos00;
@@ -127,11 +128,11 @@ public class DimensionManager : MonoBehaviour
                 break;
             case 1:
 
-                playerBody[0].gravityDirection = PlayerActor.GravityDirection.Rightward;
-                playerBody[1].gravityDirection = PlayerActor.GravityDirection.Rightward;
+                playerBody[0].GravityDirection = PlayerActor.GravityType.Rightward;
+                playerBody[1].GravityDirection = PlayerActor.GravityType.Rightward;
 
-                playerIllusion[0].gravityDirection = PlayerActor.GravityDirection.Downward;
-                playerIllusion[1].gravityDirection = PlayerActor.GravityDirection.Upward;
+                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Downward;
+                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Upward;
 
                 playerBody[0].gameObject.transform.position = spawnPos10;
                 playerBody[1].gameObject.transform.position = spawnPos11;
@@ -142,12 +143,12 @@ public class DimensionManager : MonoBehaviour
 
             case 2:
 
-                playerBody[0].gravityDirection = PlayerActor.GravityDirection.Upward;
-                playerBody[1].gravityDirection = PlayerActor.GravityDirection.Upward;
+                playerBody[0].GravityDirection = PlayerActor.GravityType.Upward;
+                playerBody[1].GravityDirection = PlayerActor.GravityType.Upward;
 
-                playerIllusion[0].gravityDirection = PlayerActor.GravityDirection.Rightward;
+                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Rightward;
 
-                playerIllusion[1].gravityDirection = PlayerActor.GravityDirection.Leftward;
+                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Leftward;
 
                 playerBody[0].gameObject.transform.position = spawnPos11;
                 playerBody[1].gameObject.transform.position = spawnPos01;
@@ -158,12 +159,12 @@ public class DimensionManager : MonoBehaviour
 
             case 3:
 
-                playerBody[0].gravityDirection = PlayerActor.GravityDirection.Leftward;
-                playerBody[1].gravityDirection = PlayerActor.GravityDirection.Leftward;
+                playerBody[0].GravityDirection = PlayerActor.GravityType.Leftward;
+                playerBody[1].GravityDirection = PlayerActor.GravityType.Leftward;
 
-                playerIllusion[0].gravityDirection = PlayerActor.GravityDirection.Upward;
+                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Upward;
 
-                playerIllusion[1].gravityDirection = PlayerActor.GravityDirection.Downward;
+                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Downward;
 
                 playerBody[0].gameObject.transform.position = spawnPos01;
                 playerBody[1].gameObject.transform.position = spawnPos10;
