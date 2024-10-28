@@ -15,6 +15,7 @@ namespace BennetMovementSystem
         protected Rigidbody2D rb;
         [SerializeField] private GravityType gravityDirection;
         private GravityType _prevGravityType;
+        public PlayerMovementController controller;
 
         public GravityType GravityDirection
         {
