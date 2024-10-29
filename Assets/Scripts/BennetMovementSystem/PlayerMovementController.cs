@@ -19,7 +19,7 @@ namespace BennetMovementSystem
             if (Input.GetKey(toRight))
                 movement += moveSpeed;
 
-            TryMovePlayerHorizontally(movement);
+            TryMovePlayerHorizontally(movement * Time.deltaTime);
 
             if (Input.GetKeyDown(jump))
             {

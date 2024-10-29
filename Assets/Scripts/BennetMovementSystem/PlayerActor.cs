@@ -21,6 +21,7 @@ namespace BennetMovementSystem
         protected void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
             _prevGravityType = gravityDirection;
             GravityDirection = gravityDirection;
         }
@@ -66,7 +67,8 @@ namespace BennetMovementSystem
         {
             Vector2 gravityMove = GetGravityDirection() *
                                   (gravityScale * Physics.gravity.magnitude * Time.fixedDeltaTime);
-            rb.MovePosition(rb.position + gravityMove);
+            rb.velocity += gravityMove;
+            //rb.MovePosition(rb.position + gravityMove);
             if (_prevGravityType != gravityDirection)
             {
                 GravityDirection = gravityDirection;
@@ -90,39 +92,10 @@ namespace BennetMovementSystem
         {
             rb.position += GetForwardDirection() * amount;
         }
-
-        public void StopMoveHorizontally()
-        {
-            switch (gravityDirection)
-            {
-                case GravityType.Downward:
-                case GravityType.Upward:
-                    rb.velocity = new Vector2(0,rb.velocity.y);
-                    break;
-                case GravityType.Leftward:
-                case GravityType.Rightward:
-                    rb.velocity = new Vector2(rb.velocity.x,0);
-                    break;
-            }
-        }
     
         public void Jump(float jumpVelocity)
         {
-            switch (gravityDirection)
-            {
-                case GravityType.Downward:
-                    rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
-                    break;
-                case GravityType.Upward:
-                    rb.velocity = new Vector2(rb.velocity.x, -jumpVelocity);
-                    break;
-                case GravityType.Leftward:
-                    rb.velocity = new Vector2(jumpVelocity,rb.velocity.y);
-                    break;
-                case GravityType.Rightward:
-                    rb.velocity = new Vector2(-jumpVelocity,rb.velocity.y);
-                    break;
-            }
+            rb.velocity = GetGravityDirection() * -jumpVelocity;
         }
 
  
