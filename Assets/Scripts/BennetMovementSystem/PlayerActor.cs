@@ -11,11 +11,20 @@ namespace BennetMovementSystem
         [SerializeField] private int defaultCollisionTestCapacity = 5;
         public float gravityScale;
         public int dimensionIndex = 1;
-    
+
+
         protected Rigidbody2D rb;
         [SerializeField] private GravityType gravityDirection;
         private GravityType _prevGravityType;
         public PlayerMovementController controller;
+
+        protected void Awake()
+        {
+            rb = GetComponent<Rigidbody2D>();
+            _prevGravityType = gravityDirection;
+            GravityDirection = gravityDirection;
+        }
+
 
         public GravityType GravityDirection
         {
@@ -44,13 +53,7 @@ namespace BennetMovementSystem
             }
         }
 
-        protected virtual void Start()
-        {
-            rb = GetComponent<Rigidbody2D>();
-            _prevGravityType = gravityDirection;
-            GravityDirection = gravityDirection;
-        }
-
+       
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))

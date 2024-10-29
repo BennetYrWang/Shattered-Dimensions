@@ -898,9 +898,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 1
   gravityDirection: 2
+  controller: {fileID: 0}
 --- !u!1 &816528707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,9 +1167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 3
   gravityDirection: 3
+  controller: {fileID: 0}
 --- !u!1 &943416262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,9 +1746,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 2
   gravityDirection: 0
+  controller: {fileID: 0}
 --- !u!114 &1290416152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1824,8 +1830,8 @@ MonoBehaviour:
   toLeft: 97
   toRight: 100
   jump: 119
-  moveSpeed: 3
-  jumpVelocity: 5
+  moveSpeed: 1
+  jumpVelocity: 2
   body: {fileID: 1432692855}
   illusion: {fileID: 678285537}
 --- !u!1 &1427487597
@@ -2244,9 +2250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 2
   gravityDirection: 0
+  controller: {fileID: 0}
 --- !u!114 &1432692858
 MonoBehaviour:
   m_ObjectHideFlags: 0
