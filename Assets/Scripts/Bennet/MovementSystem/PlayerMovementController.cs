@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BennetMovementSystem
+namespace Bennet.MovementSystem
 {
     public class PlayerMovementController : MonoBehaviour
     {

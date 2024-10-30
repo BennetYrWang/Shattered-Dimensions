@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using BennetMovementSystem;
+using Bennet.MovementSystem;
 using UnityEngine;
 
 public class DimensionManager : MonoBehaviour

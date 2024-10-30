@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace BennetMovementSystem
+namespace Bennet.MovementSystem
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerActor : MonoBehaviour
