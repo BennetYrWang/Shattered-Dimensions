@@ -11,6 +11,17 @@ namespace BennetMovementSystem
         public float jumpVelocity = 3f;
         public PlayerActor body, illusion;
 
+        private bool _dualExistence = true;
+        public bool DualExistence
+        {
+            get => _dualExistence;
+            set
+            {
+                _dualExistence = value;
+                illusion.gameObject.SetActive(value);
+            }
+        }
+
         private void Update()
         {
             float movement = 0;
@@ -26,6 +37,9 @@ namespace BennetMovementSystem
                 body.Jump(jumpVelocity);
                 illusion.Jump(jumpVelocity);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                DualExistence = !DualExistence;
         }
 
         public bool TryMovePlayerHorizontally(float amount)
@@ -33,7 +47,7 @@ namespace BennetMovementSystem
             if (amount == 0)
                 return true;
 
-            if (!body.CanMoveHorizontally(amount) || !illusion.CanMoveHorizontally(amount))
+            if (!body.CanMoveHorizontally(amount) || (_dualExistence && !illusion.CanMoveHorizontally(amount)))
                 return false;
 
             body.ApplyHorizontalMove(amount);

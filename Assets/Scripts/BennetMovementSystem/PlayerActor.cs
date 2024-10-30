@@ -13,7 +13,7 @@ namespace BennetMovementSystem
         public int dimensionIndex = 1;
 
 
-        protected Rigidbody2D rb;
+        private Rigidbody2D rb;
         [SerializeField] private GravityType gravityDirection;
         private GravityType _prevGravityType;
         public PlayerMovementController controller;
@@ -63,7 +63,7 @@ namespace BennetMovementSystem
             }
         }
 
-        protected virtual void FixedUpdate()
+        private void FixedUpdate()
         {
             Vector2 gravityMove = GetGravityDirection() *
                                   (gravityScale * Physics.gravity.magnitude * Time.fixedDeltaTime);
