@@ -7,6 +7,7 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] Animator swordAnim;
     [SerializeField]  KeyCode Attack;
 
+    public string fightName;
     [System.NonSerialized]
     public bool isHitting;
 

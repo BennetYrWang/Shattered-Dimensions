@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class AttackGameManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class AttackGameManager : MonoBehaviour
     GameObject[] playerBodys;
 
     [SerializeField]
-    TextMeshProUGUI textStatus;
+    WinScreen winScreen;
 
     private void Awake()
     {
@@ -55,10 +54,11 @@ public class AttackGameManager : MonoBehaviour
             }
         }
 
-        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions - 1)
+        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions )
         {
             Debug.Log("GameWon");
-            //GameWon
+            winScreen.gameWon(killerPlayer.fightName, killerPlayer.winColor);
+           
         }
 
        
