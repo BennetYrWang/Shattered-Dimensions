@@ -77,11 +77,22 @@ public class DimensionManager : MonoBehaviour
         // change position
 
         //change gravity
-
-        if(next)
-            currentDimension=(currentDimension+1)%totalDimensions;
+        int newDimen;
+        if (next)
+            newDimen= currentDimension=(currentDimension+1)%totalDimensions;
         else
-            currentDimension = (totalDimensions - 1 + currentDimension) % totalDimensions; ;
+            newDimen= ((totalDimensions - 1 + currentDimension) % totalDimensions);
+           
+        
+
+        if (newDimen == totalDimensions - 1 && currentDimension == 0)
+        {
+            currentDimension = totalDimensions - 2;
+        }
+        else
+        {
+            currentDimension = newDimen;
+        }
 
         int leftDimension = (totalDimensions -1 + currentDimension) %totalDimensions;
 
@@ -99,7 +110,7 @@ public class DimensionManager : MonoBehaviour
 
         if (duel)
         {
-            player1Illusion.Unregister(Dimension.SpecialDimension.Duel);
+            duel.Unregister(Dimension.SpecialDimension.Duel);
         }
 
         player1Illusion = dimensions[leftDimension];

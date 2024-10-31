@@ -27,9 +27,21 @@ namespace Bennet.MovementSystem
         {
             float movement = 0;
             if (Input.GetKey(toLeft))
+            {
+                body.FlipCharacter(true);
+                illusion.FlipCharacter(true);
                 movement -= moveSpeed;
+                
+            }
+               
             if (Input.GetKey(toRight))
+            {
+                body.FlipCharacter(false);
+                illusion.FlipCharacter(false);
                 movement += moveSpeed;
+                
+            }
+                
 
             TryMovePlayerHorizontally(movement * Time.deltaTime);
 
@@ -37,10 +49,14 @@ namespace Bennet.MovementSystem
             {
                 body.Jump(jumpVelocity);
                 illusion.Jump(jumpVelocity);
+                
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
                 DualExistence = !DualExistence;
+
+            
+
         }
 
         public bool TryMovePlayerHorizontally(float amount)
