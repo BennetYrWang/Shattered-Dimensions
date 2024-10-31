@@ -6,7 +6,6 @@ namespace Bennet.MovementSystem
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerActor : MonoBehaviour
     {
-        [SerializeField] private int defaultCollisionTestCapacity = 5;
         public float gravityScale;
         public int dimensionIndex = 1;
 
@@ -16,6 +15,7 @@ namespace Bennet.MovementSystem
         private GravityType _prevGravityType;
         public PlayerMovementController controller;
         
+        private List<RaycastHit2D> raycastHits = new(5);
         
         // Jumping
         private bool inAir;
@@ -81,10 +81,10 @@ namespace Bennet.MovementSystem
             }
             
             //Check for jumping
-            List<RaycastHit2D> hits = new(defaultCollisionTestCapacity);
-            rb.Cast(GetGravityDirection(), hits, 0.01f);
+            raycastHits.Clear();
+            rb.Cast(GetGravityDirection(), raycastHits, 0.01f);
             inAir = true;
-            foreach (RaycastHit2D hit in hits)
+            foreach (RaycastHit2D hit in raycastHits)
             {
                 if (hit.collider.CompareTag("LandScape"))
                     inAir = false;
@@ -93,10 +93,10 @@ namespace Bennet.MovementSystem
 
         public bool CanMoveHorizontally(float forwardSpeed)
         {
-            List<RaycastHit2D> hits = new(defaultCollisionTestCapacity);
-            rb.Cast(GetForwardDirection(), hits, forwardSpeed);
+            raycastHits.Clear();
+            rb.Cast(GetForwardDirection(), raycastHits, forwardSpeed);
         
-            foreach (RaycastHit2D hit in hits)
+            foreach (RaycastHit2D hit in raycastHits)
             {
                 if (hit.collider.CompareTag("Player"))
                 {
