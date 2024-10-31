@@ -10,6 +10,9 @@ public class PlayerAttackController : MonoBehaviour
     [System.NonSerialized]
     public bool isHitting;
 
+    public int dimensionStreak;
+
+    public Color winColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,4 +29,5 @@ public class PlayerAttackController : MonoBehaviour
         }
 
     }
+
 }

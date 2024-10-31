@@ -38,8 +38,51 @@ public class AttackGameManager : MonoBehaviour
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
     {
         
+        PlayerAttackController killerPlayer = playerBodyKiller.GetComponent<PlayerAttackController>();
+        PlayerAttackController deadPlayer = playerBodyDead.GetComponent<PlayerAttackController>();
+
+        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions-2)
+        {
+            killerPlayer.dimensionStreak++;
+            foreach(GameObject player in playerBodys)
+            {
+                player.transform.parent.GetComponent<Bennet.MovementSystem.PlayerMovementController>().DualExistence = false;
+            }
+        }
+
+        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions - 1)
+        {
+            Debug.Log("GameWon");
+            //GameWon
+        }
+
+       
+
+        if ((killerPlayer.dimensionStreak==0&& deadPlayer.dimensionStreak == 0)|| (killerPlayer.dimensionStreak!=0 && deadPlayer.dimensionStreak==0))
+        {
+            killerPlayer.dimensionStreak++;
+            DimensionManager.Instance.setCurrentColor(killerPlayer.winColor);
+
+        }
+
         Debug.Log(playerBodyDead.name + "Got Killed by" + playerBodyKiller);
+        
         DimensionManager.Instance.changeDimension(playerBodyKiller==playerBodys[0]);
+
+        if (killerPlayer.dimensionStreak == 0 && deadPlayer.dimensionStreak != 0)
+        {
+            DimensionManager.Instance.setCurrentColor(Color.white);
+            deadPlayer.dimensionStreak--;
+
+            if (deadPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions - 1)
+            {
+                foreach (GameObject player in playerBodys)
+                {
+                    player.transform.parent.GetComponent<Bennet.MovementSystem.PlayerMovementController>().DualExistence = true;
+                }
+            }
+
+        }
         foreach (GameObject player in playerBodys)
         {
             player.GetComponent<HitsHealth>().resetHealth();

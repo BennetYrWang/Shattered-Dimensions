@@ -12,7 +12,8 @@ public class DimensionManager : MonoBehaviour
 
     int currentDimension;
 
-    int totalDimensions;
+    [System.NonSerialized]
+    public int totalDimensions;
 
     static Dimension duel, player1Illusion, player2Illusion;
 
@@ -27,6 +28,10 @@ public class DimensionManager : MonoBehaviour
     Vector3 spawnPos01;
     Vector3 spawnPos11;
 
+    [SerializeField]
+    Transform FinalSpawnPos;
+    [SerializeField]
+    float finalPosDisT = 5f;
     private void Awake()
     {
         // Check if an instance already exists and destroy the new one if so
@@ -59,6 +64,11 @@ public class DimensionManager : MonoBehaviour
     {
         
     }
+    public void setCurrentColor(Color col)
+    {
+        dimensions[currentDimension].GetComponent<DimensionWin>().changeToWinnerColor(col);
+    }
+
 
     public void changeDimension(bool next)
     {
@@ -173,6 +183,17 @@ public class DimensionManager : MonoBehaviour
                 playerIllusion[1].gameObject.transform.position = spawnPos10;
 
 
+
+                break;
+            case 4:
+
+                playerBody[0].GravityDirection = PlayerActor.GravityType.Downward;
+                playerBody[1].GravityDirection = PlayerActor.GravityType.Downward;
+
+                
+
+                playerBody[0].gameObject.transform.position = FinalSpawnPos.position;
+                playerBody[1].gameObject.transform.position = new Vector3(FinalSpawnPos.position.x+finalPosDisT,FinalSpawnPos.position.y,FinalSpawnPos.position.z);
 
                 break;
         }
