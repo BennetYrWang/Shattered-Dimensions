@@ -56,9 +56,10 @@ namespace Bennet.MovementSystem
        
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                
+                print("Test for flipping. Triggered with Backspace.");
+                FlipCharacter();
             }
         }
 
@@ -135,6 +136,15 @@ namespace Bennet.MovementSystem
             y *= (~dir & 0b10) >> 1;
         
             return new Vector2(x, y);
+        }
+
+        public void FlipCharacter()
+        {
+            Vector2 forward = GetForwardDirection();
+            var scale = transform.localScale;
+            scale.x = forward.x == 0 ? scale.x : -scale.x;
+            scale.y = forward.y == 0 ? scale.y : -scale.y;
+            transform.localScale = scale;
         }
     }
 }
