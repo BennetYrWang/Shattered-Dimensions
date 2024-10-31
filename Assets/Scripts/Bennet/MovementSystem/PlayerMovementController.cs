@@ -12,6 +12,7 @@ namespace Bennet.MovementSystem
         public PlayerActor body, illusion;
 
         private bool _dualExistence = true;
+
         public bool DualExistence
         {
             get => _dualExistence;

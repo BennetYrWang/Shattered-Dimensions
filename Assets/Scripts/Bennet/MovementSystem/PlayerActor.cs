@@ -18,6 +18,7 @@ namespace Bennet.MovementSystem
 
         protected void Awake()
         {
+            controller = transform.parent.GetComponent<PlayerMovementController>();
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = 0f;
             _prevGravityType = gravityDirection;
@@ -81,7 +82,14 @@ namespace Bennet.MovementSystem
         
             foreach (RaycastHit2D hit in hits)
             {
-                if (hit.collider.CompareTag("LandScape") || hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag("Player"))
+                {
+                    if (!hit.collider.GetComponent<PlayerActor>().controller.TryMovePlayerHorizontally(forwardSpeed))
+                    {
+                        return false;
+                    }
+                }
+                else if (hit.collider.CompareTag("LandScape")) //|| hit.collider.CompareTag("Player"))
                     return false;
             }
             return true;

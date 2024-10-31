@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AttackGameManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class AttackGameManager : MonoBehaviour
 
     [SerializeField]
     GameObject[] playerBodys;
+
+    [SerializeField]
+    TextMeshProUGUI textStatus;
 
     private void Awake()
     {
@@ -37,7 +41,8 @@ public class AttackGameManager : MonoBehaviour
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
     {
-        
+
+
         PlayerAttackController killerPlayer = playerBodyKiller.GetComponent<PlayerAttackController>();
         PlayerAttackController deadPlayer = playerBodyDead.GetComponent<PlayerAttackController>();
 
