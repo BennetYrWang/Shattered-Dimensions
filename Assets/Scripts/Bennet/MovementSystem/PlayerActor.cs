@@ -15,6 +15,11 @@ namespace Bennet.MovementSystem
         [SerializeField] private GravityType gravityDirection;
         private GravityType _prevGravityType;
         public PlayerMovementController controller;
+        
+        
+        // Jumping
+        private bool inAir;
+        
 
         protected void Awake()
         {
@@ -74,6 +79,16 @@ namespace Bennet.MovementSystem
                 GravityDirection = gravityDirection;
                 _prevGravityType = gravityDirection;
             }
+            
+            //Check for jumping
+            List<RaycastHit2D> hits = new(defaultCollisionTestCapacity);
+            rb.Cast(GetGravityDirection(), hits, 0.01f);
+            inAir = true;
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider.CompareTag("LandScape"))
+                    inAir = false;
+            }
         }
 
         public bool CanMoveHorizontally(float forwardSpeed)
@@ -102,6 +117,8 @@ namespace Bennet.MovementSystem
     
         public void Jump(float jumpVelocity)
         {
+            if (inAir)
+                return;
             rb.velocity = GetGravityDirection() * -jumpVelocity;
         }
 
