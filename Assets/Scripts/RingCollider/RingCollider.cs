@@ -8,6 +8,7 @@ namespace RingCollider
     [RequireComponent(typeof(EdgeCollider2D))]
     public class RingCollider : MonoBehaviour
     {
+        /*
         public int segments = 36;
         public float innerRadius = 0.5f;
         public float otterRadius = 1.0f;
@@ -72,5 +73,6 @@ namespace RingCollider
                 }
             }
         }
+        */
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Bennet.Obstacle
 {
+    #if UNITY_EDITOR
     [CustomEditor(typeof(MovingObstacle))]
     public class MovingObstacleEditor : Editor
     {
@@ -12,7 +13,7 @@ namespace Bennet.Obstacle
         private SerializedProperty lerpProperty;
         private Tool prevTool;
 
-        private void OnEnable()
+        private void OnEnable() 
         {
             pos1Property = serializedObject.FindProperty("Pos1");
             pos2Property = serializedObject.FindProperty("Pos2");
@@ -78,4 +79,5 @@ namespace Bennet.Obstacle
             }
         }
     }
+    #endif
 }

@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace RingCollider
 {
+    #if UNITY_EDITOR
     [CustomEditor(typeof(RingCollider))]
     public class RingColliderCustomEditor : Editor
     {
+        /*
         private RingCollider ring;
         private SerializedProperty otterRadius;
         private SerializedProperty innerRadius;
@@ -18,7 +20,8 @@ namespace RingCollider
             innerRadius = serializedObject.FindProperty("innerRadius");
             ring.edgeCollider = ring.GetComponent<EdgeCollider2D>();
         }
-
+*/
         
     }
+    #endif
 }
