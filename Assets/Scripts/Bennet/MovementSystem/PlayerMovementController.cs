@@ -25,6 +25,7 @@ namespace Bennet.MovementSystem
 
         private void Update()
         {
+            print(Time.time);
             float movement = 0;
             if (Input.GetKey(toLeft))
                 movement -= moveSpeed;
