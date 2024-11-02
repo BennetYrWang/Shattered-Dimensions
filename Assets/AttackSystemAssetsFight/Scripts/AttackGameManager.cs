@@ -12,6 +12,8 @@ public class AttackGameManager : MonoBehaviour
     [SerializeField]
     WinScreen winScreen;
 
+
+
     private void Awake()
     {
         // Check if an instance already exists and destroy the new one if so
@@ -29,10 +31,10 @@ public class AttackGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //playerBodys = GameObject.FindGameObjectsWithTag("Player");
+        playerBodys = GameObject.FindGameObjectsWithTag("Player");
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
         
@@ -45,6 +47,7 @@ public class AttackGameManager : MonoBehaviour
         PlayerAttackController killerPlayer = playerBodyKiller.GetComponent<PlayerAttackController>();
         PlayerAttackController deadPlayer = playerBodyDead.GetComponent<PlayerAttackController>();
 
+        //Player going into final   2
         if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions-2)
         {
             killerPlayer.dimensionStreak++;
@@ -62,18 +65,14 @@ public class AttackGameManager : MonoBehaviour
         }
 
        
-
-        if ((killerPlayer.dimensionStreak==0&& deadPlayer.dimensionStreak == 0)|| (killerPlayer.dimensionStreak!=0 && deadPlayer.dimensionStreak==0))
-        {
-            killerPlayer.dimensionStreak++;
-            DimensionManager.Instance.setCurrentColor(killerPlayer.winColor);
-
-        }
+       
 
         Debug.Log(playerBodyDead.name + "Got Killed by" + playerBodyKiller);
         
-        DimensionManager.Instance.changeDimension(playerBodyKiller==playerBodys[0]);
+        DimensionManager.Instance.changeDimension(playerBodyKiller==playerBodys[0],false);
 
+
+        //DeadPlayer was ahead but got Killed
         if (killerPlayer.dimensionStreak == 0 && deadPlayer.dimensionStreak != 0)
         {
             DimensionManager.Instance.setCurrentColor(Color.white);
@@ -83,11 +82,25 @@ public class AttackGameManager : MonoBehaviour
             {
                 foreach (GameObject player in playerBodys)
                 {
+                    DimensionManager.Instance.changeDimension(playerBodyKiller == playerBodys[0], true);
                     player.transform.parent.GetComponent<Bennet.MovementSystem.PlayerMovementController>().DualExistence = true;
                 }
             }
+            else
+            {
+                DimensionManager.Instance.changeDimension(playerBodyKiller == playerBodys[0], false);
+            }
+
+        }else
+
+        //Normal kill
+        if ((killerPlayer.dimensionStreak == 0 && deadPlayer.dimensionStreak == 0) || (killerPlayer.dimensionStreak != 0 && deadPlayer.dimensionStreak == 0))
+        {
+            killerPlayer.dimensionStreak++;
+            DimensionManager.Instance.setCurrentColor(killerPlayer.winColor);
 
         }
+
         foreach (GameObject player in playerBodys)
         {
             player.GetComponent<HitsHealth>().resetHealth();

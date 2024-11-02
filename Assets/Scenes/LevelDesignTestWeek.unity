@@ -129,13 +129,13 @@ GameObject:
   m_Component:
   - component: {fileID: 100661548}
   - component: {fileID: 100661549}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &100661548
 Transform:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 120360602}
   - component: {fileID: 120360604}
   - component: {fileID: 120360603}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ground (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 170794704}
   - component: {fileID: 170794705}
   - component: {fileID: 170794706}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Dim 2
   m_TagString: Dimension
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 232644014}
   - component: {fileID: 232644016}
   - component: {fileID: 232644015}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Ground (2)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 235023144}
   - component: {fileID: 235023146}
   - component: {fileID: 235023145}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Ground (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   - component: {fileID: 240315843}
   - component: {fileID: 240315845}
   - component: {fileID: 240315844}
-  m_Layer: 9
+  m_Layer: 1
   m_Name: Ground (2)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -1047,7 +1047,7 @@ GameObject:
   - component: {fileID: 392705549}
   - component: {fileID: 392705548}
   - component: {fileID: 392705547}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Dim 4
   m_TagString: Dimension
   m_Icon: {fileID: 0}
@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 494720835}
   - component: {fileID: 494720834}
   - component: {fileID: 494720833}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Ground
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -1650,7 +1650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 1
   gravityDirection: 2
@@ -1666,7 +1665,7 @@ GameObject:
   - component: {fileID: 713997880}
   - component: {fileID: 713997882}
   - component: {fileID: 713997881}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ground (2)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -1798,7 +1797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 769560241}
   - component: {fileID: 769560242}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -2270,7 +2269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 3
   gravityDirection: 3
@@ -2285,7 +2283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 898267922}
   - component: {fileID: 898267923}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (2)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -2506,7 +2504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996180885}
   - component: {fileID: 996180886}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -2584,7 +2582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1004594095}
   - component: {fileID: 1004594096}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -2765,7 +2763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1056066383}
   - component: {fileID: 1056066384}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -2877,7 +2875,7 @@ GameObject:
   - component: {fileID: 1098986289}
   - component: {fileID: 1098986291}
   - component: {fileID: 1098986290}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Ground
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -3010,7 +3008,7 @@ GameObject:
   - component: {fileID: 1151008277}
   - component: {fileID: 1151008276}
   - component: {fileID: 1151008275}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Ground
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -3301,7 +3299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 2
   gravityDirection: 0
@@ -3401,7 +3398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1409269855}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3849,7 +3846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCollisionTestCapacity: 5
   gravityScale: 1
   dimensionIndex: 2
   gravityDirection: 0
@@ -3973,7 +3969,7 @@ GameObject:
   - component: {fileID: 1468753599}
   - component: {fileID: 1468753598}
   - component: {fileID: 1468753597}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ground
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4105,7 +4101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1561661938}
   - component: {fileID: 1561661939}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4183,7 +4179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1565807921}
   - component: {fileID: 1565807922}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4262,7 +4258,7 @@ GameObject:
   - component: {fileID: 1644262273}
   - component: {fileID: 1644262275}
   - component: {fileID: 1644262274}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Ground (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4448,7 +4444,7 @@ GameObject:
   - component: {fileID: 1673689703}
   - component: {fileID: 1673689705}
   - component: {fileID: 1673689704}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Ground (2)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4684,7 +4680,7 @@ GameObject:
   - component: {fileID: 1711256020}
   - component: {fileID: 1711256019}
   - component: {fileID: 1711256018}
-  m_Layer: 9
+  m_Layer: 1
   m_Name: Ground
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4816,13 +4812,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1736536305}
   - component: {fileID: 1736536306}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary
   m_TagString: LandScape
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1736536305
 Transform:
   m_ObjectHideFlags: 0
@@ -4894,7 +4890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770899016}
   - component: {fileID: 1770899017}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Boundary (3)
   m_TagString: LandScape
   m_Icon: {fileID: 0}
@@ -4973,7 +4969,7 @@ GameObject:
   - component: {fileID: 1795375379}
   - component: {fileID: 1795375380}
   - component: {fileID: 1795375381}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Dim 0
   m_TagString: Dimension
   m_Icon: {fileID: 0}
@@ -5258,7 +5254,7 @@ GameObject:
   - component: {fileID: 1995742940}
   - component: {fileID: 1995742941}
   - component: {fileID: 1995742942}
-  m_Layer: 8
+  m_Layer: 1
   m_Name: Dim 3
   m_TagString: Dimension
   m_Icon: {fileID: 0}
@@ -5396,7 +5392,7 @@ GameObject:
   - component: {fileID: 2059024663}
   - component: {fileID: 2059024664}
   - component: {fileID: 2059024665}
-  m_Layer: 9
+  m_Layer: 1
   m_Name: Dim 1
   m_TagString: Dimension
   m_Icon: {fileID: 0}
@@ -5459,7 +5455,7 @@ GameObject:
   - component: {fileID: 2095829214}
   - component: {fileID: 2095829216}
   - component: {fileID: 2095829215}
-  m_Layer: 9
+  m_Layer: 1
   m_Name: Ground (1)
   m_TagString: LandScape
   m_Icon: {fileID: 0}

@@ -174,5 +174,10 @@ namespace Bennet.MovementSystem
 
             transform.localScale = scale;
         }
+
+        public void setPosition(Vector3 pos)
+        {
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        }
     }
 }
