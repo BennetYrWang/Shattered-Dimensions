@@ -19,12 +19,15 @@ namespace Bennet.MovementSystem
         
         // Jumping
         private bool inAir;
+        private bool doubleJumped;
         
 
-        protected void Awake()
+        protected void Start()
         {
             controller = transform.parent.GetComponent<PlayerMovementController>();
             rb = GetComponent<Rigidbody2D>();
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous; //I'm lazy, just use this
             rb.gravityScale = 0f;
             _prevGravityType = gravityDirection;
             GravityDirection = gravityDirection;
@@ -89,6 +92,7 @@ namespace Bennet.MovementSystem
                 if (hit.collider.CompareTag("LandScape"))
                     inAir = false;
             }
+            doubleJumped = inAir && doubleJumped;
         }
 
         public bool CanMoveHorizontally(float forwardSpeed)
@@ -117,9 +121,11 @@ namespace Bennet.MovementSystem
     
         public void Jump(float jumpVelocity)
         {
-            if (inAir)
+            if (inAir && doubleJumped)
                 return;
             rb.velocity = GetGravityDirection() * -jumpVelocity;
+            doubleJumped = inAir;
+            inAir = true;
         }
 
  
