@@ -7,12 +7,9 @@ public class AttackGameManager : MonoBehaviour
     public static AttackGameManager Instance { get; private set; }
 
     [SerializeField]
-    GameObject[] playerBodys;
-
-    [SerializeField]
     WinScreen winScreen;
 
-
+    
 
     private void Awake()
     {
@@ -31,79 +28,91 @@ public class AttackGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerBodys = GameObject.FindGameObjectsWithTag("Player");
+       
     }
 
     //Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
     {
+        Bennet.MovementSystem.PlayerActor[] playerBodys = { DimensionManager.Instance.players[0].body, DimensionManager.Instance.players[1].body };
 
+        bool direction = (playerBodyKiller == playerBodys[0].gameObject);
 
+       
         PlayerAttackController killerPlayer = playerBodyKiller.GetComponent<PlayerAttackController>();
         PlayerAttackController deadPlayer = playerBodyDead.GetComponent<PlayerAttackController>();
 
-        //Player going into final   2
-        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions-2)
-        {
-            killerPlayer.dimensionStreak++;
-            foreach(GameObject player in playerBodys)
-            {
-                player.transform.parent.GetComponent<Bennet.MovementSystem.PlayerMovementController>().DualExistence = false;
-            }
-        }
 
-        if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions )
+        //Player increasing dimensions streak
+        if (deadPlayer.dimensionStreak==0)
         {
-            Debug.Log("GameWon");
-            winScreen.gameWon(killerPlayer.fightName, killerPlayer.winColor);
            
-        }
+            DimensionManager.Instance.winningStreak = ++killerPlayer.dimensionStreak;
 
-       
-       
-
-        Debug.Log(playerBodyDead.name + "Got Killed by" + playerBodyKiller);
-        
-        DimensionManager.Instance.changeDimension(playerBodyKiller==playerBodys[0],false);
-
-
-        //DeadPlayer was ahead but got Killed
-        if (killerPlayer.dimensionStreak == 0 && deadPlayer.dimensionStreak != 0)
-        {
-            DimensionManager.Instance.setCurrentColor(Color.white);
-            deadPlayer.dimensionStreak--;
-
-            if (deadPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions - 1)
+            
+            //Player Won
+            if (killerPlayer.dimensionStreak >= DimensionManager.Instance.totalDimensions)
             {
-                foreach (GameObject player in playerBodys)
-                {
-                    DimensionManager.Instance.changeDimension(playerBodyKiller == playerBodys[0], true);
-                    player.transform.parent.GetComponent<Bennet.MovementSystem.PlayerMovementController>().DualExistence = true;
-                }
+                Debug.Log("GameWonnnnw");
+                winScreen.gameWon(killerPlayer.fightName, killerPlayer.winColor);
             }
             else
             {
-                DimensionManager.Instance.changeDimension(playerBodyKiller == playerBodys[0], false);
+                //Normal Increase
+                DimensionManager.Instance.setCurrentColor(killerPlayer.winColor);
+                DimensionManager.Instance.changeDimension(direction);
+                
             }
 
-        }else
-
-        //Normal kill
-        if ((killerPlayer.dimensionStreak == 0 && deadPlayer.dimensionStreak == 0) || (killerPlayer.dimensionStreak != 0 && deadPlayer.dimensionStreak == 0))
+        }
+        //Moving Down
+        else if(killerPlayer.dimensionStreak==0)
         {
-            killerPlayer.dimensionStreak++;
-            DimensionManager.Instance.setCurrentColor(killerPlayer.winColor);
+            DimensionManager.Instance.winningStreak = --deadPlayer.dimensionStreak;
+
+
+            DimensionManager.Instance.changeDimension(direction);
+            DimensionManager.Instance.setCurrentColor(Color.white);
 
         }
 
-        foreach (GameObject player in playerBodys)
+
+
+        //if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions - 2)
+        //{
+        //    DimensionManager.Instance.winningStreak = killerPlayer.dimensionStreak++;
+
+        //    foreach (Bennet.MovementSystem.PlayerMovementController player in DimensionManager.Instance.players)
+        //    {
+        //        player.DualExistence = false;
+        //    }
+        //}
+
+        //if (killerPlayer.dimensionStreak == DimensionManager.Instance.totalDimensions)
+        //{
+
+
+
+        //}
+
+        foreach (Bennet.MovementSystem.PlayerActor player in playerBodys)
         {
-            player.GetComponent<HitsHealth>().resetHealth();
+            player.gameObject.GetComponent<HitsHealth>().resetHealth();
         }
+
+
+
+        Debug.Log(playerBodyDead.name + "Got Killed by" + playerBodyKiller);
+       
+
+        
     }
+
+
+        
 }

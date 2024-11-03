@@ -5,10 +5,6 @@ public class Dimension : MonoBehaviour
     [SerializeField] private int index;
     public int Index => index;
 
-    private static Dimension duel, player1Illusion, player2Illusion;
-
-  
-  
 
     public void SetAsDimension(SpecialDimension dimension)
     {
@@ -34,12 +30,14 @@ public class Dimension : MonoBehaviour
             transform.GetChild(i).gameObject.layer = layer;
     }
 
-    public void Unregister(SpecialDimension dimension)
+    public void Unregister()
     {
-        gameObject.layer = 0;
+        int layer = LayerMask.NameToLayer("TransparentFX");
+        gameObject.layer = layer;
         for (int i = 0; i < transform.childCount; i++)
-            transform.GetChild(i).gameObject.layer = 0;
+            transform.GetChild(i).gameObject.layer = layer ;
     }
+
 
     public enum SpecialDimension
     {

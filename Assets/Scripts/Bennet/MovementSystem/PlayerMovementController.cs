@@ -13,6 +13,7 @@ namespace Bennet.MovementSystem
 
         private bool _dualExistence = true;
 
+
         public bool DualExistence
         {
             get => _dualExistence;
@@ -31,17 +32,17 @@ namespace Bennet.MovementSystem
                 body.FlipCharacter(true);
                 illusion.FlipCharacter(true);
                 movement -= moveSpeed;
-                
+
             }
-               
+
             if (Input.GetKey(toRight))
             {
                 body.FlipCharacter(false);
                 illusion.FlipCharacter(false);
                 movement += moveSpeed;
-                
+
             }
-                
+
 
             TryMovePlayerHorizontally(movement * Time.deltaTime);
 
@@ -49,13 +50,13 @@ namespace Bennet.MovementSystem
             {
                 body.Jump(jumpVelocity);
                 illusion.Jump(jumpVelocity);
-                
+
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
                 DualExistence = !DualExistence;
 
-            
+
 
         }
 
@@ -69,9 +70,10 @@ namespace Bennet.MovementSystem
 
             body.ApplyHorizontalMove(amount);
             illusion.ApplyHorizontalMove(amount);
-        
+
             return true;
         }
 
-      
+
+    }
 }

@@ -9,6 +9,8 @@ public class SwordHitTrigger : MonoBehaviour
     
 
     Collider2D hitCollider;
+
+    bool canDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,9 @@ public class SwordHitTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
        
-        if ( collision.gameObject.tag== "Player" && collision.gameObject != transform.parent.gameObject)
+        if ( collision.gameObject.tag== "Player" && collision.gameObject != transform.parent.gameObject&& canDamage)
         {
-
+            canDamage = false;
             HitsHealth currentHealth= collision.gameObject.GetComponent<HitsHealth>();
             currentHealth.Hit(transform.parent.gameObject);
         }
@@ -38,6 +40,7 @@ public class SwordHitTrigger : MonoBehaviour
 
     public void hitStart()
     {
+        canDamage = true;
         hitCollider.enabled = true;
         playerAttack.isHitting = true;
       
@@ -46,6 +49,7 @@ public class SwordHitTrigger : MonoBehaviour
 
     public void hitEnd()
     {
+        canDamage = false;
         hitCollider.enabled = false;
 
         playerAttack.isHitting = false;

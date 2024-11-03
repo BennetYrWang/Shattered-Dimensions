@@ -6,42 +6,31 @@ using UnityEngine;
 public class DimensionManager : MonoBehaviour
 {
     public static DimensionManager Instance { get; private set; }
+    List<Dimension> dimensions;
+
+    
+    public int loopingDimensionsTill;
+
+    private int currentDimension;
+
+ 
+    public int totalDimensions { get; private set; }
 
     [SerializeField]
-    Dimension[] dimensions;
-
-    [SerializeField]
-    int outOfLoopDimension;
-
-    int currentDimension;
-
-    int totalDimensions;
+    Transform spawnPoint;
+    List<Transform> spawnPoints;
 
     static Dimension duel, player1Illusion, player2Illusion;
 
-
-    [SerializeField] Transform firstSpawnPoint;
-    [SerializeField] float DistanceBetweenSpawnPoints = 10f;
-
-
-    [SerializeField]  PlayerMovementController[]  players;
-
-    Vector3 spawnPos00;
-    Vector3 spawnPos10;
-    Vector3 spawnPos01;
-    Vector3 spawnPos11;
-
-    Vector3[,] spawnPos = new Vector3[2, 2];
-
-    [SerializeField]
-    Transform FinalSpawnPos;
-    [SerializeField]
-    float finalPosDisT = 5f;
-
-    int dimensionStreak;
-
+    public int dimensionStreak { get; private set; }
     bool prevNext;
 
+    PlayerActor[] pB;
+    PlayerActor[] pI;
+
+    public PlayerMovementController[] players;
+
+    public int winningStreak;
     private void Awake()
     {
         // Check if an instance already exists and destroy the new one if so
@@ -60,22 +49,51 @@ public class DimensionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnPos[0, 0] = firstSpawnPoint.position;
-        spawnPos[1, 0] = new Vector3(spawnPos[0, 0].x + DistanceBetweenSpawnPoints, spawnPos[0, 0].y, spawnPos[0, 0].z);
-        spawnPos[1, 1] = new Vector3(spawnPos[1, 0].x, spawnPos[1, 0].y + DistanceBetweenSpawnPoints, spawnPos[1, 0].z);
-        spawnPos[0, 1] = new Vector3(spawnPos[1, 1].x - DistanceBetweenSpawnPoints, spawnPos[1, 1].y, spawnPos[1, 1].z);
+        spawnPoints = new List<Transform>();
 
-        totalDimensions = dimensions.Length;
+        foreach(Transform child in spawnPoint.transform)
+        {
+            spawnPoints.Add(child);
+        }
 
+        
+       
+        pB = new PlayerActor[players.Length];
+        pI = new PlayerActor[players.Length];
+
+        for(int i=0;i<players.Length;i++)
+        {
+            pI[i] = players[i].illusion;
+            pB[i] = players[i].body;
+        }
+
+        GameObject[] dims = GameObject.FindGameObjectsWithTag("Dimension");
+
+        dimensions = new List<Dimension>();
+        for(int i=0; i<dims.Length;i++)
+        {
+
+            Dimension dimComponent = dims[i].GetComponent<Dimension>();
+            if (dimComponent != null)
+            {
+                dimensions.Add(dimComponent);
+            }
+            else
+            {
+                Debug.LogWarning("GameObject at index " + i + " does not have a Dimension component.");
+            }
+        }
+
+        dimensions.Sort((a, b) => a.GetComponent<Dimension>().Index.CompareTo(b.GetComponent<Dimension>().Index));
+        totalDimensions = dimensions.Count;
+
+        
         currentDimension = -1;
         changeDimension(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
+
+   
 
     public void setCurrentColor(Color col)
     {
@@ -83,35 +101,27 @@ public class DimensionManager : MonoBehaviour
     }
 
 
+
     public void changeDimension(bool next)
     {
-        if (prevNext == next)
-        {
-            dimensionStreak++;
-        }
-        else
-        {
-            dimensionStreak--;
-        }
-
-        prevNext = next;
+        bool inLoop = winningStreak < (loopingDimensionsTill);
 
 
-        if (!(dimensionStreak >= outOfLoopDimension))
+        if (inLoop)
         {
-            if (next)
-                currentDimension = currentDimension = (currentDimension + 1) % outOfLoopDimension;
+            if (next) 
+                currentDimension = (currentDimension + 1) % loopingDimensionsTill;
             else
-                currentDimension = ((outOfLoopDimension - 1 + currentDimension) % outOfLoopDimension);
-
+                currentDimension = ((loopingDimensionsTill - 1 + currentDimension) % loopingDimensionsTill);
         }
 
-
+       
         else
         {
-            if (currentDimension == outOfLoopDimension - 1)
+            if (winningStreak == loopingDimensionsTill)
             {
-                currentDimension = outOfLoopDimension + 1;
+
+                currentDimension = loopingDimensionsTill;
             }
             else
             {
@@ -124,12 +134,10 @@ public class DimensionManager : MonoBehaviour
                         dim.gameObject.GetComponent<DimensionWin>().changeToWinnerColor(Color.white);
                     }
                 }
-
             }
-
         }
 
-
+        
         //change collision layer
 
         // change position
@@ -137,22 +145,22 @@ public class DimensionManager : MonoBehaviour
         //change gravity
 
 
-        int leftDimension = (outOfLoopDimension - 1 + currentDimension) % outOfLoopDimension;
+        int leftDimension = (loopingDimensionsTill - 1 + currentDimension) % loopingDimensionsTill;
 
-        int rightDimension = (currentDimension + 1) % outOfLoopDimension;
+        int rightDimension = (currentDimension + 1) % loopingDimensionsTill;
 
 
         if (player1Illusion)
         {
-            player1Illusion.Unregister(Dimension.SpecialDimension.Player1Illusion);
+            player1Illusion.Unregister();
         }
         if (player2Illusion)
         {
-            player2Illusion.Unregister(Dimension.SpecialDimension.Player2Illusion);
+            player2Illusion.Unregister();
         }
         if (duel)
         {
-            duel.Unregister(Dimension.SpecialDimension.Duel);
+            duel.Unregister();
         }
 
 
@@ -169,26 +177,35 @@ public class DimensionManager : MonoBehaviour
 
         player2Illusion.SetAsDimension(Dimension.SpecialDimension.Player2Illusion);
 
-        PlayerActor[] pB= { players[0].body, players[1].body };
-        PlayerActor[] pI= { players[0].body, players[1].body };
+
+        int spawnLoop = inLoop ? loopingDimensionsTill : spawnPoints.Count;
+        pB[0].setPosition(spawnPoints[currentDimension].position);
+        pB[1].setPosition(spawnPoints[(currentDimension+1)%spawnLoop].position);
+
+        pI[0].setPosition(spawnPoints[leftDimension].position);
+        pI[1].setPosition(spawnPoints[(rightDimension+1)%spawnLoop].position);
+
+        setPlayersAccordingToDimension();
+        
+    }
+
+   
+
+
+    void setPlayersAccordingToDimension()
+    {
         switch (currentDimension)
         {
             case 0:
+                
+
                 pB[0].GravityDirection = PlayerActor.GravityType.Downward;
                 pB[1].GravityDirection = PlayerActor.GravityType.Downward;
 
-                pB[0].GravityDirection = PlayerActor.GravityType.Leftward;
-                pB[1].GravityDirection = PlayerActor.GravityType.Rightward;
-
-
-                pB[0].setPosition(spawnPos[0,0]);
-                pB[1].setPosition(spawnPos[1, 0]);
-
-                pI[0].setPosition(spawnPos[0,1]);
-                pI[1].setPosition(spawnPos[1,1]);
-
-
+                pI[0].GravityDirection = PlayerActor.GravityType.Leftward;
+                pI[1].GravityDirection = PlayerActor.GravityType.Rightward;
                 break;
+
             case 1:
 
                 pB[0].GravityDirection = PlayerActor.GravityType.Rightward;
@@ -196,59 +213,44 @@ public class DimensionManager : MonoBehaviour
 
                 pI[0].GravityDirection = PlayerActor.GravityType.Downward;
                 pI[1].GravityDirection = PlayerActor.GravityType.Upward;
-
-                pB[0].setPosition(spawnPos[1,0]);
-                pB[1].setPosition(spawnPos[1,1]);
-
-                pI[0].setPosition(spawnPos[0,0]);
-                pI[1].setPosition(spawnPos[0,1]);
-
                 break;
 
             case 2:
 
-                playerBody[0].GravityDirection = PlayerActor.GravityType.Upward;
-                playerBody[1].GravityDirection = PlayerActor.GravityType.Upward;
+                pB[0].GravityDirection = PlayerActor.GravityType.Upward;
+                pB[1].GravityDirection = PlayerActor.GravityType.Upward;
 
-                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Rightward;
-
-                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Leftward;
-
-                playerBody[0].gameObject.transform.position = spawnPos11;
-                playerBody[1].gameObject.transform.position = spawnPos01;
-
-                playerIllusion[0].gameObject.transform.position = spawnPos10;
-                playerIllusion[1].gameObject.transform.position = spawnPos00;
+                pI[0].GravityDirection = PlayerActor.GravityType.Rightward;
+                pI[1].GravityDirection = PlayerActor.GravityType.Leftward;
                 break;
 
             case 3:
 
-                playerBody[0].GravityDirection = PlayerActor.GravityType.Leftward;
-                playerBody[1].GravityDirection = PlayerActor.GravityType.Leftward;
+                pB[0].GravityDirection = PlayerActor.GravityType.Leftward;
+                pB[1].GravityDirection = PlayerActor.GravityType.Leftward;
 
-                playerIllusion[0].GravityDirection = PlayerActor.GravityType.Upward;
-
-                playerIllusion[1].GravityDirection = PlayerActor.GravityType.Downward;
-
-                playerBody[0].gameObject.transform.position = spawnPos01;
-                playerBody[1].gameObject.transform.position = spawnPos10;
-
-                playerIllusion[0].gameObject.transform.position = spawnPos11;
-                playerIllusion[1].gameObject.transform.position = spawnPos10;
+                pI[0].GravityDirection = PlayerActor.GravityType.Upward;
+                pI[1].GravityDirection = PlayerActor.GravityType.Downward;
                 break;
 
             case 4:
 
-                playerBody[0].GravityDirection = PlayerActor.GravityType.Downward;
-                playerBody[1].GravityDirection = PlayerActor.GravityType.Downward;
-
-
-
-                playerBody[0].gameObject.transform.position = FinalSpawnPos.position;
-                playerBody[1].gameObject.transform.position = new Vector3(FinalSpawnPos.position.x + finalPosDisT, FinalSpawnPos.position.y, FinalSpawnPos.position.z);
+                pB[0].GravityDirection = PlayerActor.GravityType.Downward;
+                pB[1].GravityDirection = PlayerActor.GravityType.Downward;
 
                 break;
         }
 
+        bool dualOn=false;
+        if (currentDimension < loopingDimensionsTill)
+        {
+            dualOn = true;
+        }
+
+        foreach (Bennet.MovementSystem.PlayerMovementController p in players)
+        {
+            p.DualExistence = dualOn;
+        }
     }
+
 }
