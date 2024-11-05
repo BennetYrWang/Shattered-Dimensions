@@ -22,7 +22,7 @@ namespace Bennet.MovementSystem
         private bool doubleJumped;
         
 
-        protected void Start()
+        protected void Awake()
         {
             controller = transform.parent.GetComponent<PlayerMovementController>();
             rb = GetComponent<Rigidbody2D>();
@@ -73,6 +73,7 @@ namespace Bennet.MovementSystem
 
         private void FixedUpdate()
         {
+
             Vector2 gravityMove = GetGravityDirection() *
                                   (gravityScale * Physics.gravity.magnitude * Time.fixedDeltaTime);
             rb.velocity += gravityMove;

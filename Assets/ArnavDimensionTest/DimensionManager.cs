@@ -86,6 +86,7 @@ public class DimensionManager : MonoBehaviour
 
         dimensions.Sort((a, b) => a.GetComponent<Dimension>().Index.CompareTo(b.GetComponent<Dimension>().Index));
         totalDimensions = dimensions.Count;
+   
 
         
         currentDimension = -1;
