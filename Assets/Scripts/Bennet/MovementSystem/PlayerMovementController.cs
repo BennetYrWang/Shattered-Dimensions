@@ -45,9 +45,6 @@ namespace Bennet.MovementSystem
 
         private void Update()
         {
-<<<<<<< HEAD
-            
-=======
             print(pressedControllKey);
             // Double Click Stuff
             if (dashRecoveryCounterSecond > 0f)
@@ -79,8 +76,7 @@ namespace Bennet.MovementSystem
                 }
             }
             
-            // Get input
->>>>>>> 0d88e4a86c71c1b025ed1d968e998dc02dca66c2
+      
             float movement = 0;
             if (isDashing)
             {
