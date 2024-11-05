@@ -16,7 +16,19 @@ namespace Bennet.MovementSystem
         public PlayerMovementController controller;
         
         private List<RaycastHit2D> raycastHits = new(5);
-        
+
+        private bool facingRight;
+        public bool FacingRight
+        {
+            get => facingRight;
+            set
+            {
+                if (facingRight != value)
+                    FlipCharacter();
+                facingRight = value;
+            }
+        }
+
         // Jumping
         private bool inAir;
         private bool doubleJumped;
@@ -162,24 +174,10 @@ namespace Bennet.MovementSystem
             return new Vector2(x, y);
         }
 
-        public void FlipCharacter(bool flip)
+        public void FlipCharacter()
         {
-            //Vector2 forward = GetForwardDirection();
             var scale = transform.localScale;
-
-            if (flip)
-            {
-                scale = new Vector3(Mathf.Abs(scale.x) * -1, scale.y, scale.z);
-            }
-            else
-            {
-                scale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
-            }
-            //scale.x = forward.x == 0 ? scale.x : -scale.x;
-            //scale.y = forward.y == 0 ? scale.y : -scale.y;
-
-
-            transform.localScale = scale;
+            transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
         }
 
         public void setPosition(Vector3 pos)
