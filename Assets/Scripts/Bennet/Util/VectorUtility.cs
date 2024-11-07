@@ -50,12 +50,47 @@ namespace Bennet.Util
             
             return new Vector3(roll, yaw, pitch);
         }
-
         public enum EulerOrder
         {
             XYZ,
             YXZ,
             ZYX
         }
+
+        public static float Project(this Vector2 vector, Vector2 onVector)
+        {
+            return Vector2.Dot(vector, onVector) / onVector.magnitude;
+        }
+
+        public enum Vector2Direction
+        {
+            None = 0,
+            Up = 1,
+            Down = 2,
+            Right = 4,
+            Left = 8,
+            UpRight = 5,
+            UpLeft = 9,
+            DownRight = 6,
+            DownLeft = 10,
+        }
+
+        /// <summary>
+        /// Rotate a vector 2 counter-clockwise by angle of radians. The result will apply to the original vector
+        /// </summary>
+        /// <param name="vector2">The vector to modify</param>
+        /// <param name="counterclockwiseRadians">The angle in radians</param>
+        /// <returns></returns>
+        public static ref Vector2 Rotate(this ref Vector2 vector2, float counterclockwiseRadians)
+        {
+            float x = vector2.x;
+            float y = vector2.y;
+            float cos = Mathf.Cos(counterclockwiseRadians);
+            float sin = Mathf.Sin(counterclockwiseRadians);
+            vector2.x = x * cos - y * sin;
+            vector2.y = x * sin + y * cos;
+            return ref vector2;
+        }
     }
+    
 }

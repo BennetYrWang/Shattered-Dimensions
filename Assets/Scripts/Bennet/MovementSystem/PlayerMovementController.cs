@@ -1,37 +1,44 @@
-﻿using UnityEngine;
+﻿using Bennet.Util;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Bennet.MovementSystem
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        [FormerlySerializedAs("toLeft")] public KeyCode toLeftKey;
-        [FormerlySerializedAs("toRight")] public KeyCode toRightKey;
-        public KeyCode jump;
-        public float moveSpeed = 1f;
-        public float jumpVelocity = 3f;
+        [Header("Controller Input")]
+        public KeyCode leftKey;
+        public KeyCode rightKey;
+        public KeyCode jumpKey;
+        public KeyCode downKey;
+        private KeyCode pressedControllKey;
 
-
+        [Header("Movement")]
+        public bool inputAllowed = true;
+        public float moveSpeed = 5f;
+        public float jumpVelocity = 7f;
+        public float dashSpeed = 10f;
+        
+        [Header("Dash State")]
         public bool isDashing = false;
         public bool dashRecovered = true;
-        public bool canDash => dashRecovered;
+        public bool canDashInterrupted = true;
         
-        public bool canDashInterrupted = false;
+        [Header("Dash Values")]
+        public float dashDurationSecond = 0.3f;
+        public float doubleClickIntervalSecond = 0.2f;
+        public float dashRecoverySecond = 1f;
+        private Vector2 dashDirection;
         
-        public float dashSpeed = 3f;
-        public float dashDurationSecond = 0.2f;
-        public float doubleClickIntervalSecond = 0.15f;
+        //Counters
         private float doubleClickCounter = -1f;
         private float dashRecoveryCounterSecond = -1f;
         private float dashDurationCounterSecond = -1f;
-        [FormerlySerializedAs("dashRecoveryTimeSecond")] public float dashRecoverySecond = 1f;
         
         
         public PlayerActor body, illusion;
         
         private bool _dualExistence = true;
-
-        private KeyCode pressedControllKey;
 
         public bool DualExistence
         {
@@ -45,38 +52,10 @@ namespace Bennet.MovementSystem
 
         private void Update()
         {
-            print(pressedControllKey);
-            // Double Click Stuff
-            if (dashRecoveryCounterSecond > 0f)
-            {
-                dashRecoveryCounterSecond -= Time.deltaTime;
-                if (dashRecoveryCounterSecond < 0f)
-                {
-                    dashRecoveryCounterSecond = -1f;
-                    dashRecovered = true;
-                }
-            }
-
-            if (doubleClickCounter > 0f)
-            {
-                doubleClickCounter -= Time.deltaTime;
-                if (doubleClickCounter < 0f)
-                {
-                    pressedControllKey = KeyCode.None;
-                    doubleClickCounter = -1f;
-                }
-            }
-
-            if (dashDurationCounterSecond > 0f)
-            {
-                dashDurationCounterSecond -= Time.deltaTime;
-                if (dashDurationCounterSecond < 0f)
-                {
-                    StopDashing();
-                }
-            }
+            UpdateCounters();
+            if (inputAllowed)
+                UpdateInputs();
             
-      
             float movement = 0;
             if (isDashing)
             {
@@ -84,22 +63,22 @@ namespace Bennet.MovementSystem
             }
             else
             {
-                if (Input.GetKeyDown(toLeftKey))
-                    RegisterPressedKey(toLeftKey);
+                if (Input.GetKeyDown(leftKey))
+                    RegisterPressedKey(leftKey);
 
-                if (Input.GetKeyDown(toRightKey))
-                    RegisterPressedKey(toRightKey);
+                if (Input.GetKeyDown(rightKey))
+                    RegisterPressedKey(rightKey);
 
                 if (!isDashing)
                 {
-                    if (Input.GetKey(toLeftKey))
+                    if (Input.GetKey(leftKey))
                     {
                         movement -= moveSpeed;
                         if (_dualExistence)
                             illusion.FacingRight = false;
                     }
 
-                    if (Input.GetKey(toRightKey))
+                    if (Input.GetKey(rightKey))
                     {
                         movement += moveSpeed;
                         if (_dualExistence)
@@ -109,16 +88,53 @@ namespace Bennet.MovementSystem
             }
 
             bool moveSucceed = TryMovePlayerHorizontally(movement * Time.deltaTime);
-            if (isDashing && moveSucceed && canDashInterrupted)
+            
+            if (isDashing && !moveSucceed && canDashInterrupted)
                 StopDashing();
 
-            if (Input.GetKeyDown(jump))
+            if (Input.GetKeyDown(jumpKey))
             {
                 body.Jump(jumpVelocity);
                 if (_dualExistence)
                     illusion.Jump(jumpVelocity);
             }
 
+            void UpdateCounters()
+            {
+                if (dashRecoveryCounterSecond > 0f)
+                {
+                    dashRecoveryCounterSecond -= Time.deltaTime;
+                    if (dashRecoveryCounterSecond < 0f)
+                    {
+                        dashRecoveryCounterSecond = -1f;
+                        dashRecovered = true;
+                    }
+                }
+
+                if (doubleClickCounter > 0f)
+                {
+                    doubleClickCounter -= Time.deltaTime;
+                    if (doubleClickCounter < 0f)
+                    {
+                        pressedControllKey = KeyCode.None;
+                        doubleClickCounter = -1f;
+                    }
+                }
+
+                if (dashDurationCounterSecond > 0f)
+                {
+                    dashDurationCounterSecond -= Time.deltaTime;
+                    if (dashDurationCounterSecond < 0f)
+                    {
+                        StopDashing();
+                    }
+                }
+            }
+
+            void UpdateInputs()
+            {
+                
+            }
         }
 
         public bool TryMovePlayerHorizontally(float amount)
@@ -135,9 +151,10 @@ namespace Bennet.MovementSystem
             return true;
         }
 
+        // Dashing
         private void RegisterPressedKey(KeyCode dashKey)
         {
-            if (!canDash)
+            if (!dashRecovered)
                 return;
             if (pressedControllKey != dashKey)
             {
@@ -149,6 +166,7 @@ namespace Bennet.MovementSystem
             doubleClickCounter = -1f;
             StartDashing();
         }
+        
         private void StartDashing()
         {
             print("Dash");
