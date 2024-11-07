@@ -725,8 +725,8 @@ Transform:
   m_GameObject: {fileID: 235023143}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.14, y: -6.73, z: 0}
-  m_LocalScale: {x: 2.5, y: 0.8, z: 10}
+  m_LocalPosition: {x: -0.81, y: -7.45, z: 0}
+  m_LocalScale: {x: 3.1640627, y: 0.8, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1795375379}
@@ -1000,7 +1000,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.36078432, g: 0.3882353, b: 0.42352942, a: 0}
+  m_BackGroundColor: {r: 0.22294413, g: 0.24922684, b: 0.2830189, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1927,7 +1927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 2
   dimensionIndex: 1
   gravityDirection: 2
   controller: {fileID: 0}
@@ -2597,7 +2597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 2
   dimensionIndex: 3
   gravityDirection: 3
   controller: {fileID: 0}
@@ -3939,7 +3939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 2
   dimensionIndex: 2
   gravityDirection: 0
   controller: {fileID: 0}
@@ -4056,14 +4056,14 @@ MonoBehaviour:
   toLeftKey: 97
   toRightKey: 100
   jump: 119
-  moveSpeed: 5
-  jumpVelocity: 7
+  moveSpeed: 7
+  jumpVelocity: 12
   isDashing: 0
   dashRecovered: 1
   canDashInterrupted: 0
-  dashSpeed: 40
+  dashSpeed: 20
   dashDurationSecond: 0.2
-  doubleClickIntervalSecond: 0.4
+  doubleClickIntervalSecond: 0.25
   dashRecoverySecond: 1
   body: {fileID: 1432692855}
   illusion: {fileID: 678285537}
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e573253bad44229db2f0d79854c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 2
   dimensionIndex: 2
   gravityDirection: 0
   controller: {fileID: 0}
@@ -5302,14 +5302,14 @@ MonoBehaviour:
   toLeftKey: 276
   toRightKey: 275
   jump: 273
-  moveSpeed: 5
-  jumpVelocity: 7
+  moveSpeed: 7
+  jumpVelocity: 12
   isDashing: 0
   dashRecovered: 1
   canDashInterrupted: 0
   dashSpeed: 40
-  dashDurationSecond: 0.2
-  doubleClickIntervalSecond: 0.4
+  dashDurationSecond: 0.25
+  doubleClickIntervalSecond: 0.25
   dashRecoverySecond: 1
   body: {fileID: 1290416150}
   illusion: {fileID: 877969297}
