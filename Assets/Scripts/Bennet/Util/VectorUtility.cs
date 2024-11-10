@@ -91,6 +91,11 @@ namespace Bennet.Util
             vector2.y = x * sin + y * cos;
             return ref vector2;
         }
+
+        public static Vector2 AngleToVector(float angleRadiance)
+        {
+            return new Vector2(Mathf.Cos(angleRadiance), Mathf.Sin(angleRadiance));
+        }
     }
     
 }

@@ -17,7 +17,7 @@ namespace Bennet.Obstacle
         {
             pos1Property = serializedObject.FindProperty("Pos1");
             pos2Property = serializedObject.FindProperty("Pos2");
-            lerpProperty = serializedObject.FindProperty("interpolationPosition");
+            lerpProperty = serializedObject.FindProperty("lerpPosition");
             prevTool = Tools.current;
             Tools.current = Tool.None;
         }
