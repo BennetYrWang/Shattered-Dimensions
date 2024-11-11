@@ -41,7 +41,7 @@ public class AttackGameManager : MonoBehaviour
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
     {
-        Bennet.MovementSystem.PlayerActor[] playerBodys = { DimensionManager.Instance.players[0].body, DimensionManager.Instance.players[1].body };
+        BennetWang.MovementSystem.PlayerActor[] playerBodys = { DimensionManager.Instance.players[0].body, DimensionManager.Instance.players[1].body };
 
         bool direction = (playerBodyKiller == playerBodys[0].gameObject);
 
@@ -119,7 +119,7 @@ public class AttackGameManager : MonoBehaviour
 
         //}
 
-        foreach (Bennet.MovementSystem.PlayerActor player in playerBodys)
+        foreach (BennetWang.MovementSystem.PlayerActor player in playerBodys)
         {
             player.gameObject.GetComponent<HitsHealth>().resetHealth();
         }

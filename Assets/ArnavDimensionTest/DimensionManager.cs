@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Bennet.MovementSystem;
+using BennetWang.MovementSystem;
 using UnityEngine;
 
 public class DimensionManager : MonoBehaviour
@@ -248,7 +248,7 @@ public class DimensionManager : MonoBehaviour
             dualOn = true;
         }
 
-        foreach (Bennet.MovementSystem.PlayerMovementController p in players)
+        foreach (BennetWang.MovementSystem.PlayerMovementController p in players)
         {
             p.DualExistence = dualOn;
         }

@@ -1,8 +1,9 @@
-﻿using Bennet.Util;
+﻿using BennetWang.Util;
+using BennetWang.Module.Timer;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Bennet.MovementSystem
+namespace BennetWang.MovementSystem
 {
     public class PlayerMovementController : MonoBehaviour
     {
@@ -30,10 +31,10 @@ namespace Bennet.MovementSystem
         public float dashRecoverySecond = 1f;
         private Vector2 dashDirection;
         
-        //Counters
-        private float doubleClickCounter = -1f;
-        private float dashRecoveryCounterSecond = -1f;
-        private float dashDurationCounterSecond = -1f;
+        //Timers
+        private Timer doubleClickTimer;
+        private Timer dashDurationTimer;
+        private Timer dashRecoveryTimer;
         
         
         public PlayerActor body, illusion;
@@ -52,7 +53,6 @@ namespace Bennet.MovementSystem
 
         private void Update()
         {
-            UpdateCounters();
             if (inputAllowed)
                 UpdateInputs();
             
@@ -98,43 +98,15 @@ namespace Bennet.MovementSystem
                 if (_dualExistence)
                     illusion.Jump(jumpVelocity);
             }
+        }
 
-            void UpdateCounters()
-            {
-                if (dashRecoveryCounterSecond > 0f)
-                {
-                    dashRecoveryCounterSecond -= Time.deltaTime;
-                    if (dashRecoveryCounterSecond < 0f)
-                    {
-                        dashRecoveryCounterSecond = -1f;
-                        dashRecovered = true;
-                    }
-                }
+        private void UpdateInputs()
+        {
+            if (Input.GetKeyDown(leftKey))
+                RegisterPressedKey(leftKey);
 
-                if (doubleClickCounter > 0f)
-                {
-                    doubleClickCounter -= Time.deltaTime;
-                    if (doubleClickCounter < 0f)
-                    {
-                        pressedControllKey = KeyCode.None;
-                        doubleClickCounter = -1f;
-                    }
-                }
-
-                if (dashDurationCounterSecond > 0f)
-                {
-                    dashDurationCounterSecond -= Time.deltaTime;
-                    if (dashDurationCounterSecond < 0f)
-                    {
-                        StopDashing();
-                    }
-                }
-            }
-
-            void UpdateInputs()
-            {
-                
-            }
+            if (Input.GetKeyDown(rightKey))
+                RegisterPressedKey(rightKey);
         }
 
         public bool TryMovePlayerHorizontally(float amount)
@@ -156,14 +128,33 @@ namespace Bennet.MovementSystem
         {
             if (!dashRecovered)
                 return;
+            
             if (pressedControllKey != dashKey)
             {
                 pressedControllKey = dashKey;
-                doubleClickCounter = doubleClickIntervalSecond;
+                
+                if (doubleClickTimer == null)
+                {
+                    doubleClickTimer = TimerModule.CreateTimer(
+                        doubleClickIntervalSecond,
+                        Timer.UpdateType.Update,
+                        () =>
+                        {
+                            pressedControllKey = KeyCode.None;
+                            doubleClickTimer = null;
+                        });
+                }
+                else
+                {
+                    doubleClickTimer.TimeLimit = doubleClickIntervalSecond;
+                    doubleClickTimer.Reset();
+                    doubleClickTimer.Paused = false;
+                }
                 return;
             }
-
-            doubleClickCounter = -1f;
+            
+            // If double pressed, pause the timer and dash
+            doubleClickTimer.Paused = true;
             StartDashing();
         }
         
@@ -172,15 +163,20 @@ namespace Bennet.MovementSystem
             print("Dash");
             isDashing = true;
             dashRecovered = false;
-            dashDurationCounterSecond = dashDurationSecond;
-            dashRecoveryCounterSecond = dashRecoverySecond;
+            
+            dashDurationTimer?.Dispose();
+            dashRecoveryTimer?.Dispose();
+            
+            dashDurationTimer = TimerModule.CreateTimer(dashDurationSecond,Timer.UpdateType.Update,() => isDashing = false);
+            dashRecoveryTimer = TimerModule.CreateTimer(dashRecoverySecond, Timer.UpdateType.Update, () => dashRecovered = true);
+            
             pressedControllKey = KeyCode.None;
         }
 
         private void StopDashing()
         {
             isDashing = false;
-            dashDurationCounterSecond = -1f;
+            dashDurationTimer.Dispose();
         }
     }
 }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Bennet.Obstacle
+namespace BennetWang.Obstacle
 {
     #if UNITY_EDITOR
     [CustomEditor(typeof(MovingObstacle))]

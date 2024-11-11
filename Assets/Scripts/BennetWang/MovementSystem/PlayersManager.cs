@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Bennet.MovementSystem
+namespace BennetWang.MovementSystem
 {
     public class PlayersManager : MonoBehaviour
     {

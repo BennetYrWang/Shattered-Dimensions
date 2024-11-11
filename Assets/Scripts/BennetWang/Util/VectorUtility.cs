@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Bennet.Util
+namespace BennetWang.Util
 {
     public static class VectorUtility
     {

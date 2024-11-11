@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bennet.MovementSystem
+namespace BennetWang.MovementSystem
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerActor : MonoBehaviour

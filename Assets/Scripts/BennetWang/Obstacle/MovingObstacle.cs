@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Timers;
-using Bennet.MovementSystem;
+using BennetWang.MovementSystem;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Bennet.Obstacle
+namespace BennetWang.Obstacle
 {
     [RequireComponent(typeof(Collider2D))]
     public class MovingObstacle : MonoBehaviour
