@@ -79,22 +79,22 @@ namespace BennetWang.Util
         /// Rotate a vector 2 counter-clockwise by angle of radians. The result will apply to the original vector
         /// </summary>
         /// <param name="vector2">The vector to modify</param>
-        /// <param name="counterclockwiseRadians">The angle in radians</param>
+        /// <param name="radians">The angle in radians</param>
         /// <returns></returns>
-        public static ref Vector2 Rotate(this ref Vector2 vector2, float counterclockwiseRadians)
+        public static ref Vector2 Rotate(this ref Vector2 vector2, float radians)
         {
             float x = vector2.x;
             float y = vector2.y;
-            float cos = Mathf.Cos(counterclockwiseRadians);
-            float sin = Mathf.Sin(counterclockwiseRadians);
+            float cos = Mathf.Cos(radians);
+            float sin = Mathf.Sin(radians);
             vector2.x = x * cos - y * sin;
             vector2.y = x * sin + y * cos;
             return ref vector2;
         }
 
-        public static Vector2 AngleToVector(float angleRadiance)
+        public static Vector2 AngleToVector(float radians)
         {
-            return new Vector2(Mathf.Cos(angleRadiance), Mathf.Sin(angleRadiance));
+            return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
         }
     }
     

@@ -8,10 +8,9 @@ namespace BennetWang.MovementSystem
     public class PlayerMovementController : MonoBehaviour
     {
         [Header("Controller Input")]
-        public KeyCode leftKey;
-        public KeyCode rightKey;
-        public KeyCode jumpKey;
-        public KeyCode downKey;
+        public KeyCode leftKey = KeyCode.A;
+        public KeyCode rightKey = KeyCode.D;
+        public KeyCode jumpKey = KeyCode.W;
         private KeyCode pressedControllKey;
 
         [Header("Movement")]
@@ -29,7 +28,11 @@ namespace BennetWang.MovementSystem
         public float dashDurationSecond = 0.3f;
         public float doubleClickIntervalSecond = 0.2f;
         public float dashRecoverySecond = 1f;
-        private Vector2 dashDirection;
+        private bool dash2Right;
+        
+        [Header("References")]
+        public PlayerActor body, illusion;
+        [SerializeField] private TrailRenderer bodyTrail, illusionTrail;
         
         //Timers
         private Timer doubleClickTimer;
@@ -37,7 +40,7 @@ namespace BennetWang.MovementSystem
         private Timer dashRecoveryTimer;
         
         
-        public PlayerActor body, illusion;
+        
         
         private bool _dualExistence = true;
 
@@ -53,60 +56,62 @@ namespace BennetWang.MovementSystem
 
         private void Update()
         {
-            if (inputAllowed)
-                UpdateInputs();
+            if (!inputAllowed)
+                return;
             
-            float movement = 0;
+            if (!isDashing)
+                CheckDoubleClick();
+
             if (isDashing)
-            {
-                movement = illusion.FacingRight ? dashSpeed : -dashSpeed;
-            }
+                UpdateDashing();
             else
-            {
-                if (Input.GetKeyDown(leftKey))
-                    RegisterPressedKey(leftKey);
-
-                if (Input.GetKeyDown(rightKey))
-                    RegisterPressedKey(rightKey);
-
-                if (!isDashing)
-                {
-                    if (Input.GetKey(leftKey))
-                    {
-                        movement -= moveSpeed;
-                        if (_dualExistence)
-                            illusion.FacingRight = false;
-                    }
-
-                    if (Input.GetKey(rightKey))
-                    {
-                        movement += moveSpeed;
-                        if (_dualExistence)
-                            illusion.FacingRight = true;
-                    }
-                }
-            }
-
-            bool moveSucceed = TryMovePlayerHorizontally(movement * Time.deltaTime);
-            
-            if (isDashing && !moveSucceed && canDashInterrupted)
-                StopDashing();
-
-            if (Input.GetKeyDown(jumpKey))
-            {
-                body.Jump(jumpVelocity);
-                if (_dualExistence)
-                    illusion.Jump(jumpVelocity);
-            }
+                UpdateMoveInputs();
         }
 
-        private void UpdateInputs()
+        private void CheckDoubleClick()
         {
             if (Input.GetKeyDown(leftKey))
                 RegisterPressedKey(leftKey);
 
             if (Input.GetKeyDown(rightKey))
                 RegisterPressedKey(rightKey);
+        }
+        
+        private void UpdateMoveInputs()
+        {
+            float horizontalMove = 0;
+            CalculateHorizontalMove();
+
+            if (body.CanMoveHorizontally(horizontalMove) && illusion.CanMoveHorizontally(horizontalMove))
+            {
+                body.ApplyHorizontalMove(horizontalMove);
+                illusion.ApplyHorizontalMove(horizontalMove);
+            }
+
+            if (Input.GetKeyDown(jumpKey))
+            {
+                body.Jump(jumpVelocity);
+                illusion.Jump(jumpVelocity);
+            }
+            
+            void  CalculateHorizontalMove()
+            {
+                if (Input.GetKey(leftKey))
+                {
+                    horizontalMove -= moveSpeed;
+                    if (_dualExistence)
+                        illusion.FacingRight = false;
+                }
+
+                if (Input.GetKey(rightKey))
+                {
+                    horizontalMove += moveSpeed;
+                    if (_dualExistence)
+                        illusion.FacingRight = true;
+                }
+
+                horizontalMove *= Time.deltaTime;
+            }
         }
 
         public bool TryMovePlayerHorizontally(float amount)
@@ -155,6 +160,12 @@ namespace BennetWang.MovementSystem
             
             // If double pressed, pause the timer and dash
             doubleClickTimer.Paused = true;
+
+            if (dashKey == leftKey)
+                dash2Right = false;
+            else if (dashKey == rightKey)
+                dash2Right = true;
+            
             StartDashing();
         }
         
@@ -167,12 +178,35 @@ namespace BennetWang.MovementSystem
             dashDurationTimer?.Dispose();
             dashRecoveryTimer?.Dispose();
             
-            dashDurationTimer = TimerModule.CreateTimer(dashDurationSecond,Timer.UpdateType.Update,() => isDashing = false);
-            dashRecoveryTimer = TimerModule.CreateTimer(dashRecoverySecond, Timer.UpdateType.Update, () => dashRecovered = true);
+            dashDurationTimer = TimerModule.CreateTimer(dashDurationSecond,Timer.UpdateType.Update,() =>
+            {
+                isDashing = false;
+                dashDurationTimer = null;
+            });
+            dashRecoveryTimer = TimerModule.CreateTimer(dashRecoverySecond, Timer.UpdateType.Update, () =>
+            {
+                dashRecovered = true;
+                dashRecoveryTimer = null;
+            });
             
             pressedControllKey = KeyCode.None;
         }
 
+        private void UpdateDashing()
+        {
+            float move = dashSpeed * Time.deltaTime * (dash2Right ? 1f : -1f);
+            bool dashWillSuccess = body.CanMoveHorizontally(move) &&
+                                   illusion.CanMoveHorizontally(dashSpeed * Time.deltaTime * (dash2Right? 1f:-1f));
+            if (!dashWillSuccess)
+            {
+                if (canDashInterrupted)
+                    StopDashing();
+                return;
+            }
+            
+            body.ApplyHorizontalMove(move);
+            illusion.ApplyHorizontalMove(move);
+        }
         private void StopDashing()
         {
             isDashing = false;
