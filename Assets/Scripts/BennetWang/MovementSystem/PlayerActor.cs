@@ -1,37 +1,38 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bennet.MovementSystem
+namespace BennetWang.MovementSystem
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerActor : MonoBehaviour
     {
-        public float gravityScale;
-        public int dimensionIndex = 1;
-
-
-        private Rigidbody2D rb;
-        [SerializeField] private GravityType gravityDirection;
-        private GravityType _prevGravityType;
-        public PlayerMovementController controller;
-        
-        private List<RaycastHit2D> raycastHits = new(5);
-
-        private bool facingRight;
+        // Movement
+        private bool _facingRight;
         public bool FacingRight
         {
-            get => facingRight;
+            get => _facingRight;
             set
             {
-                if (facingRight != value)
+                if (_facingRight != value)
                     FlipCharacter();
-                facingRight = value;
+                _facingRight = value;
             }
         }
-
+        [SerializeField] private GravityType gravityDirection;
+        public float gravityScale;
+        
         // Jumping
         private bool inAir;
         private bool doubleJumped;
+        
+        // References
+        private Rigidbody2D rb;
+        public PlayerMovementController controller;
+        
+        // Private Variables
+        private List<RaycastHit2D> raycastHitsCache = new(5);
+
+
         
 
         protected void Awake()
@@ -41,7 +42,6 @@ namespace Bennet.MovementSystem
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous; //I'm lazy, just use this
             rb.gravityScale = 0f;
-            _prevGravityType = gravityDirection;
             GravityDirection = gravityDirection;
         }
 
@@ -89,18 +89,12 @@ namespace Bennet.MovementSystem
             Vector2 gravityMove = GetGravityDirection() *
                                   (gravityScale * Physics.gravity.magnitude * Time.fixedDeltaTime);
             rb.velocity += gravityMove;
-            //rb.MovePosition(rb.position + gravityMove);
-            if (_prevGravityType != gravityDirection)
-            {
-                GravityDirection = gravityDirection;
-                _prevGravityType = gravityDirection;
-            }
             
             //Check for jumping
-            raycastHits.Clear();
-            rb.Cast(GetGravityDirection(), raycastHits, 0.01f);
+            raycastHitsCache.Clear();
+            rb.Cast(GetGravityDirection(), raycastHitsCache, 0.01f);
             inAir = true;
-            foreach (RaycastHit2D hit in raycastHits)
+            foreach (RaycastHit2D hit in raycastHitsCache)
             {
                 if (hit.collider.CompareTag("LandScape"))
                     inAir = false;
@@ -110,10 +104,10 @@ namespace Bennet.MovementSystem
 
         public bool CanMoveHorizontally(float forwardSpeed)
         {
-            raycastHits.Clear();
-            rb.Cast(GetForwardDirection(), raycastHits, forwardSpeed);
+            raycastHitsCache.Clear();
+            rb.Cast(GetForwardDirection(), raycastHitsCache, forwardSpeed);
         
-            foreach (RaycastHit2D hit in raycastHits)
+            foreach (RaycastHit2D hit in raycastHitsCache)
             {
                 if (hit.collider.CompareTag("Player"))
                 {
@@ -127,6 +121,8 @@ namespace Bennet.MovementSystem
             }
             return true;
         }
+        
+        
         public void ApplyHorizontalMove(float amount)
         {
             rb.position += GetForwardDirection() * amount;
@@ -150,6 +146,18 @@ namespace Bennet.MovementSystem
             Upward = 3
         }
 
+        public void FlipCharacter()
+        {
+            var scale = transform.localScale;
+            transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
+        }
+
+        public void setPosition(Vector3 pos)
+        {
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        }
+        
+
         public Vector2 GetGravityDirection()
         {
             int x, y;
@@ -172,17 +180,6 @@ namespace Bennet.MovementSystem
             y *= (~dir & 0b10) >> 1;
         
             return new Vector2(x, y);
-        }
-
-        public void FlipCharacter()
-        {
-            var scale = transform.localScale;
-            transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
-        }
-
-        public void setPosition(Vector3 pos)
-        {
-            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
         }
     }
 }

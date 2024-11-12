@@ -1,10 +1,11 @@
 ﻿using System;
-using Bennet.MovementSystem;
+using System.Timers;
+using BennetWang.MovementSystem;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Bennet.Obstacle
+namespace BennetWang.Obstacle
 {
     [RequireComponent(typeof(Collider2D))]
     public class MovingObstacle : MonoBehaviour
@@ -14,7 +15,7 @@ namespace Bennet.Obstacle
         public Vector2 Pos1, Pos2;
         [SerializeField, Range(0f,1f)] protected float lerpPosition = .5f;
         [SerializeField] private bool moveReversed;
-        public bool reverseWhenCollide = false;
+        public bool isMoving = true;
         [SerializeField] float lerpDuration;
         [SerializeField, Tooltip("Time rest at the end")] float restTime;
         
@@ -24,6 +25,7 @@ namespace Bennet.Obstacle
         
 
         private float horinzontalMoveAttempt;
+        
         
         private Rigidbody2D rb;
         protected Collider2D triggerCollider;
@@ -36,6 +38,7 @@ namespace Bennet.Obstacle
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            
         }
 
         private void FixedUpdate()
@@ -53,8 +56,14 @@ namespace Bennet.Obstacle
             
             reversedThisFrame = false;
             prevLerpPosition = lerpPosition;
-            lerpPosition += 1 / lerpDuration * (moveReversed ? -1 : 1);
-            if (Mathf.Abs(lerpPosition - (moveReversed? 0:1)) < float.Epsilon)
+            lerpPosition += 1 / lerpDuration * (moveReversed ? -1 : 1) * Time.fixedDeltaTime;
+
+            bool reachEnd = false;
+            if (moveReversed)
+                reachEnd = lerpPosition <= 0f;
+            else
+                reachEnd = lerpPosition >= 1f;
+            if (reachEnd)
                 ReachEnd();
         }
         

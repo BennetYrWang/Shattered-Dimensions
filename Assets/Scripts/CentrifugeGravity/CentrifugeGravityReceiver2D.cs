@@ -1,5 +1,5 @@
 ﻿using System;
-using Bennet.Util;
+using BennetWang.Util;
 using UnityEngine;
 
 namespace CentrifugeGravity
