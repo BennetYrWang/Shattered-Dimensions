@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Timers;
+using BennetWang.Module.Timer;
 using BennetWang.MovementSystem;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Timer = BennetWang.Module.Timer.Timer;
 
 namespace BennetWang.Obstacle
 {
@@ -11,62 +10,56 @@ namespace BennetWang.Obstacle
     public class MovingObstacle : MonoBehaviour
     {
 
-        [Header("Position")]
-        public Vector2 Pos1, Pos2;
-        [SerializeField, Range(0f,1f)] protected float lerpPosition = .5f;
+        [Header("Position")] public Vector2 Pos1, Pos2;
+        [SerializeField, Range(0f, 1f)] protected float lerpPosition = .5f;
         [SerializeField] private bool moveReversed;
         public bool isMoving = true;
         [SerializeField] float lerpDuration;
-        [SerializeField, Tooltip("Time rest at the end")] float restTime;
-        
-        
-        private float prevLerpPosition;
-        private float plannedMove;
-        
+
+        [SerializeField, Tooltip("Time rest at the end")]
+        float restTime;
 
         private float horinzontalMoveAttempt;
-        
-        
+
+
         private Rigidbody2D rb;
         protected Collider2D triggerCollider;
         private Vector2 prevLocation;
 
         private bool reversedThisFrame = false;
-        private float restTimer = -1f;
         private bool resting = false;
+
+        //Timers
+        private Timer restTimer;
+
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
-            
         }
 
         private void FixedUpdate()
         {
             if (resting)
-            {
-                restTimer -= Time.fixedDeltaTime;
-                if (restTimer <= 0f)
-                {
-                    resting = false;
-                    restTimer = -1f;
-                }
                 return;
-            }
             
-            reversedThisFrame = false;
-            prevLerpPosition = lerpPosition;
-            lerpPosition += 1 / lerpDuration * (moveReversed ? -1 : 1) * Time.fixedDeltaTime;
-
+            float deltaLerpValue = Time.fixedDeltaTime / lerpDuration;
+            if (moveReversed)
+                deltaLerpValue *= -1f;
+            lerpPosition += deltaLerpValue;
+            
             bool reachEnd = false;
             if (moveReversed)
                 reachEnd = lerpPosition <= 0f;
             else
                 reachEnd = lerpPosition >= 1f;
+            
             if (reachEnd)
-                ReachEnd();
+                Rest(restTime);
+            
+            UpdatePosition();
         }
-        
+
         private bool TryApplyMovementToPlayer(PlayerActor playerActor, float horizontalAmount)
         {
             bool result = playerActor.CanMoveHorizontally(horizontalAmount);
@@ -77,16 +70,14 @@ namespace BennetWang.Obstacle
 
         private void WithdrawMove()
         {
-            if (reversedThisFrame)
-                moveReversed = !moveReversed;
-            lerpPosition = prevLerpPosition;
+            lerpPosition -= 1 / lerpDuration * (moveReversed ? -1 : 1) * Time.fixedDeltaTime;
         }
 
-        private void ReachEnd()
+        private void UpdatePosition()
         {
-            moveReversed = !moveReversed;
-            reversedThisFrame = true;
+            rb.position = Vector2.Lerp(Pos1,Pos2,lerpPosition);
         }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (!other.gameObject.CompareTag("Player"))
@@ -97,6 +88,18 @@ namespace BennetWang.Obstacle
             {
                 throw new NotImplementedException();
             }
+        }
+
+        private void Rest(float restTimeSecond)
+        {
+            restTimer?.Dispose();
+            restTimer = TimerModule.CreateTimer(restTimeSecond, Timer.UpdateType.Update, ReStart);
+        }
+        
+        private void ReStart()
+        {
+            moveReversed = !moveReversed;
+            resting = false;
         }
     }
 }

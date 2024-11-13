@@ -27,9 +27,25 @@ namespace BennetWang.Obstacle
             Tools.current = prevTool;
         }
         
+        
         [Obsolete("Obsolete")]
         private void OnSceneGUI()
         {
+            if (EditorApplication.isPlaying)
+            {
+                Vector2 pos1 = pos1Property.vector2Value;
+                Vector2 pos2 = pos2Property.vector2Value;
+                
+                Handles.color = Color.green;
+                Handles.DrawLine(pos1 + Vector2.up * .2f, pos1 + Vector2.down * .2f);
+                Handles.DrawLine(pos1 + Vector2.left * .2f, pos1 + Vector2.right * .2f);
+                Handles.DrawLine(pos2 + Vector2.up * .2f, pos2 + Vector2.down * .2f);
+                Handles.DrawLine(pos2 + Vector2.left * .2f, pos2 + Vector2.right * .2f);
+                Handles.color = Color.cyan;
+                Handles.DrawLine(pos1, pos2);
+                return;
+            }
+            
             MovingObstacle obstacle = (MovingObstacle)target;
 
             Handles.color = Color.green;
