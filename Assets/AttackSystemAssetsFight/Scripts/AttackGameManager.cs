@@ -46,8 +46,8 @@ public class AttackGameManager : MonoBehaviour
         bool direction = (playerBodyKiller == playerBodys[0].gameObject);
 
        
-        PlayerAttackController killerPlayer = playerBodyKiller.GetComponent<PlayerAttackController>();
-        PlayerAttackController deadPlayer = playerBodyDead.GetComponent<PlayerAttackController>();
+        AttackPlayerCircleType killerPlayer = playerBodyKiller.GetComponent<AttackPlayerCircleType>();
+        AttackPlayerCircleType deadPlayer = playerBodyDead.GetComponent<AttackPlayerCircleType>();
 
 
         //Player increasing dimensions streak

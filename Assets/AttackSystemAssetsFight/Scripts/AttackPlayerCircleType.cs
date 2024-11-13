@@ -9,6 +9,17 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField] Transform attackPoint;
     [SerializeField] string playerTag;
     [SerializeField] float attackRadius;
+
+    [SerializeField] KeyCode attackKey;
+
+    public string fightName;
+    [System.NonSerialized]
+    public bool isHitting;
+
+    public int dimensionStreak;
+
+    
+    public Color winColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +29,14 @@ public class AttackPlayerCircleType : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(attackKey))
         {
             Attack();
         }
     }
+
+
+
 
     void Attack()
     {
