@@ -112,11 +112,6 @@ namespace BennetWang.MovementSystem
                 if (hit.collider.CompareTag("LandScape"))
                     landed = true;
             }
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> 1cfc45f8a8a146f5aa8ae6fe949895dbb248878b
             if (!(landed || inAir))
                 onFallingBegin?.Invoke();
             if (landed && inAir)
