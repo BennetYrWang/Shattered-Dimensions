@@ -21,7 +21,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     
     public Color winColor;
 
-
+    [SerializeField] Color normalCol, holdingCol;
     bool keyReleased;
     bool holding;
 
@@ -33,21 +33,24 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField]
     float minHoldTime;
 
-    bool keyPressed;
+    bool pressStart;
     [SerializeField]
     float keytoHoldRatio;
+
+    [SerializeField] BoxCollider2D attackCol;
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackCol.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(attackKey)&& !keyPressed)
+        if (Input.GetKeyDown(attackKey) && !holding && !pressStart )
         {
-            keyPressed = true;
+            pressStart = true;
+            keyReleased = false;
             spriteAnim.SetTrigger("Hold");
         }
 
@@ -76,35 +79,26 @@ public class AttackPlayerCircleType : MonoBehaviour
     }
     public void attackDone()
     {
+        attackCol.enabled = false;
+
         holdTime = keytoHoldRatio * keyHoldTime;
-        keyHoldTime = 0;
         holdTime = Mathf.Clamp(holdTime, minHoldTime, maxHoldtime);
+
         Invoke("stopHold", holdTime);
     }
 
 
     public void stopHold()
     {
-        
+        keyHoldTime = 0;
+        pressStart = false;
+        holding = false;
         spriteAnim.SetBool("isHolding", false);
     }
+
     public void Attack()
     {
-        
-
-        Collider2D[] hitPlayers =Physics2D.OverlapCircleAll(attackPoint.position, attackRadius);
-
-        foreach( Collider2D player in hitPlayers)
-        {
-            if (player.gameObject != gameObject && player.CompareTag(playerTag))
-            {
-                HitsHealth currentHealth = player.gameObject.GetComponent<HitsHealth>();
-                if (currentHealth != null)
-                    currentHealth.Hit(gameObject);
-            }
-           
-        }
-
+        attackCol.enabled = true;
 
     }
 
@@ -116,4 +110,15 @@ public class AttackPlayerCircleType : MonoBehaviour
         }
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag=="Player"&& gameObject != collision.gameObject)
+        {
+            HitsHealth currentEnemy = collision.gameObject.GetComponent<HitsHealth>();
+            currentEnemy.Hit(gameObject);
+        }
+    }
+
+
 }

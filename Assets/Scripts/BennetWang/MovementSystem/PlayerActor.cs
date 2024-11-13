@@ -126,7 +126,7 @@ namespace BennetWang.MovementSystem
                     landed = true;
             }
 
-            if (!(landed || inAirs))
+            if (!(landed || inAir))
                 onFallingBegin?.Invoke();
 
             inAir = !landed;
