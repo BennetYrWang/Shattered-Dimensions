@@ -7,6 +7,8 @@ public class AttackBox : MonoBehaviour
 
     BoxCollider2D boxCol;
     public bool canDamage;
+    [SerializeField] float hitDist;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,7 @@ public class AttackBox : MonoBehaviour
             hitEnd();
             HitsHealth currentHealth = collision.gameObject.GetComponent<HitsHealth>();
             currentHealth.Hit(transform.parent.gameObject);
+            collision.gameObject.transform.parent.GetComponent<BennetWang.MovementSystem.PlayerMovementController>().TryMovePlayerHorizontally(hitDist);
         }
     }
 }

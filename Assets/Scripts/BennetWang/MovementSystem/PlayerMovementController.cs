@@ -75,6 +75,7 @@ namespace BennetWang.MovementSystem
                 UpdateMoveInputs();
         }
 
+
         private void CheckDoubleClick()
         {
             if (Input.GetKeyDown(leftKey))
