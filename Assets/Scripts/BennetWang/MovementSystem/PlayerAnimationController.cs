@@ -12,7 +12,9 @@ namespace BennetWang.MovementSystem
             _movementController.onMoveStart += OnPlayerMoveStart;
             _movementController.onMoveStop += OnPlayerMoveStop;
             _movementController.body.onFallingBegin += OnBodyStartFalling;
-            _movementController.illusion.onFallingBegin += OnIllusionStatFalling;
+            _movementController.illusion.onFallingBegin += OnIllusionStartFalling;
+            _movementController.body.onLanding += OnBodyLanding;
+            _movementController.illusion.onLanding += OnIllusionLanding;
         }
 
         private void OnDestroy()
@@ -20,7 +22,9 @@ namespace BennetWang.MovementSystem
             _movementController.onMoveStart -= OnPlayerMoveStart;
             _movementController.onMoveStop -= OnPlayerMoveStop;
             _movementController.body.onFallingBegin -= OnBodyStartFalling;
-            _movementController.illusion.onFallingBegin -= OnIllusionStatFalling;
+            _movementController.illusion.onFallingBegin -= OnIllusionStartFalling;
+            _movementController.body.onLanding -= OnBodyLanding;
+            _movementController.illusion.onLanding -= OnIllusionLanding;
         }
 
         void OnBodyStartFalling()
@@ -28,7 +32,17 @@ namespace BennetWang.MovementSystem
             
         }
 
-        void OnIllusionStatFalling()
+        void OnBodyLanding()
+        {
+            
+        }
+
+        void OnIllusionStartFalling()
+        {
+            
+        }
+
+        void OnIllusionLanding()
         {
             
         }

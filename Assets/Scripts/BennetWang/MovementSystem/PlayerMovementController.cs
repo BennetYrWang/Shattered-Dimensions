@@ -194,14 +194,20 @@ namespace BennetWang.MovementSystem
             print("Dash");
             isDashing = true;
             dashRecovered = false;
+
+            bodyTrail.enabled = true;
+            illusionTrail.enabled = true;
             
+            // Set Timers
             dashDurationTimer?.Dispose();
             dashRecoveryTimer?.Dispose();
-            
             dashDurationTimer = TimerModule.CreateTimer(dashDurationSecond,Timer.UpdateType.Update,() =>
             {
                 isDashing = false;
                 dashDurationTimer = null;
+                
+                bodyTrail.enabled = false;
+                illusionTrail.enabled = false;
             });
             dashRecoveryTimer = TimerModule.CreateTimer(dashRecoverySecond, Timer.UpdateType.Update, () =>
             {

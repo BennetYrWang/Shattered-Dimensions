@@ -40,6 +40,11 @@ namespace BennetWang.MovementSystem
         // Delegates
         public delegate void OnInAirBegin();
         public event OnInAirBegin onFallingBegin;
+
+        public delegate void OnLanding();
+
+        public event OnLanding onLanding;
+        
         [SerializeField] private Animator spriteAnim;
         protected void Awake()
         {
@@ -107,10 +112,12 @@ namespace BennetWang.MovementSystem
                 if (hit.collider.CompareTag("LandScape"))
                     landed = true;
             }
-
+            
             if (!(landed || inAir))
                 onFallingBegin?.Invoke();
-
+            if (landed && inAir)
+                onLanding?.Invoke();
+            
             inAir = !landed;
             doubleJumped = inAir && doubleJumped;
         }
