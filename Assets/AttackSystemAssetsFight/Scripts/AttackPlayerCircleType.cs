@@ -76,7 +76,7 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void holdDone()
     {
-
+        mySpr.color = holdingCol;
         holding = true;
         spriteAnim.SetBool("isHolding", true);
     }
@@ -85,6 +85,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     {
         attackCol.hitEnd();
 
+        mySpr.color = normalCol;
         transform.parent.GetComponent<BennetWang.MovementSystem.PlayerMovementController>().inputAllowed = false ;
         holdTime = keytoHoldRatio * keyHoldTime;
         holdTime = Mathf.Clamp(holdTime, minHoldTime, maxHoldtime);

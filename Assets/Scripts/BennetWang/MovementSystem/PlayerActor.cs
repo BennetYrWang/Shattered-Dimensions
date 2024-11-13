@@ -166,7 +166,7 @@ namespace BennetWang.MovementSystem
             Upward = 3
         }
 
-        public void FlipCharacter()
+        private void FlipCharacter()
         {
             var scale = transform.localScale;
             transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
