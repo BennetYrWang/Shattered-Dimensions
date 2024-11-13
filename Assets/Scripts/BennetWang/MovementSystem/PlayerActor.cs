@@ -9,20 +9,7 @@ namespace BennetWang.MovementSystem
         // Movement
         private bool _isMoving;
 
-        public bool IsMoving
-        {
-            get => _isMoving;
-            set
-            {
-                if (_isMoving == value)
-                    return;
-                _isMoving = value;
-                if (_isMoving)
-                    onMoveStart?.Invoke();
-                else
-                    onMoveEnd?.Invoke();
-            }
-        }
+        public bool IsMoving { get; set; }
 
         private bool _facingRight;
         public bool FacingRight
@@ -53,11 +40,11 @@ namespace BennetWang.MovementSystem
         // Delegates
         public delegate void OnInAirBegin();
         public event OnInAirBegin onFallingBegin;
-        public delegate void OnMoveStart();
 
-        public event OnMoveStart onMoveStart;
-        public delegate void OnMoveEnd();
-        public event OnMoveEnd onMoveEnd;
+        public delegate void OnLanding();
+
+        public event OnLanding onLanding;
+        
         [SerializeField] private Animator spriteAnim;
         protected void Awake()
         {
@@ -125,10 +112,16 @@ namespace BennetWang.MovementSystem
                 if (hit.collider.CompareTag("LandScape"))
                     landed = true;
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 1cfc45f8a8a146f5aa8ae6fe949895dbb248878b
             if (!(landed || inAir))
                 onFallingBegin?.Invoke();
-
+            if (landed && inAir)
+                onLanding?.Invoke();
+            
             inAir = !landed;
             doubleJumped = inAir && doubleJumped;
         }
