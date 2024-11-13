@@ -10,7 +10,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField] float attackRadius;
 
     [SerializeField] KeyCode attackKey;
-
+    
     public string fightName;
     [System.NonSerialized]
     public bool isHitting;
@@ -20,8 +20,8 @@ public class AttackPlayerCircleType : MonoBehaviour
     
     public Color winColor;
 
-    [SerializeField] Color normalCol, holdingCol;
-
+    [SerializeField] Color holdingCol, hitCol;
+    public Color normalCol;
     [SerializeField] SpriteRenderer mySpr;
 
     bool keyReleased;
@@ -40,10 +40,12 @@ public class AttackPlayerCircleType : MonoBehaviour
     float keytoHoldRatio;
 
     [SerializeField] AttackBox attackCol;
+
+    [SerializeField] float downForce;
     // Start is called before the first frame update
     void Start()
     {
-        
+        normalCol = mySpr.color;
     }
 
     // Update is called once per frame
@@ -84,7 +86,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     public void attackDone()
     {
         attackCol.hitEnd();
-
+        mySpr.color = hitCol;
         mySpr.color = normalCol;
         transform.parent.GetComponent<BennetWang.MovementSystem.PlayerMovementController>().inputAllowed = false ;
         holdTime = keytoHoldRatio * keyHoldTime;
@@ -97,7 +99,7 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void stopHold()
     {
-      
+        mySpr.color = normalCol;
         keyHoldTime = 0;
         pressStart = false;
         holding = false;
@@ -107,11 +109,13 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void Attack()
     {
+        downForce = spriteAnim.GetBool("inAir") ? 4 : 1;
+        //GetComponent<Rigidbody2D>().position += GetComponent<BennetWang.MovementSystem.PlayerActor>().GetGravityDirection() * downForce;
         attackCol.hitStart();
-
+       
     }
 
-
+   
     //private void OnTriggerEnter2D(Collider2D collision)
     //{
     //    Debug.Log(gameObject.name);

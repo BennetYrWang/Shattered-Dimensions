@@ -8,7 +8,7 @@ public class DimensionWin : MonoBehaviour
     List<SpriteRenderer> allSprites;
     SpriteRenderer[] spritesChild;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spritesChild = GetComponentsInChildren<SpriteRenderer>();
         //CollectChildSpriteRenderers();
@@ -73,6 +73,21 @@ public class DimensionWin : MonoBehaviour
             sp = spritesChild[i]?spritesChild[i]:null;
             if(sp!=null)
             sp.color = winCol;
+        }
+    }
+
+    public void setAlpha(float alphaVal)
+    {
+        SpriteRenderer sp;
+        for (int i = 0; i < spritesChild.Length; i++)
+        {
+            sp = spritesChild[i] ? spritesChild[i] : null;
+            if (sp != null)
+            {
+                Color originalColor = sp.color;
+                sp.color = new Color(originalColor.r, originalColor.g, originalColor.b, alphaVal);
+            }
+                
         }
     }
 }

@@ -30,6 +30,7 @@ public class DimensionManager : MonoBehaviour
 
     public PlayerMovementController[] players;
 
+    [SerializeField] float lowAlpha;
     public int winningStreak;
     private void Awake()
     {
@@ -89,9 +90,16 @@ public class DimensionManager : MonoBehaviour
    
 
         
+       
+       
+
+        for(int i=0; i < dimensions.Count; i++)
+        {
+            dimensions[i].gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);
+        }
+
         currentDimension = -1;
         changeDimension(true);
-
     }
 
    
@@ -173,10 +181,13 @@ public class DimensionManager : MonoBehaviour
 
 
         player1Illusion.SetAsDimension(Dimension.SpecialDimension.Player1Illusion);
+        player1Illusion.gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);
 
         duel.SetAsDimension(Dimension.SpecialDimension.Duel);
+        duel.gameObject.GetComponent<DimensionWin>().setAlpha(1f);
 
         player2Illusion.SetAsDimension(Dimension.SpecialDimension.Player2Illusion);
+        player2Illusion.gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);
 
 
         int spawnLoop = inLoop ? loopingDimensionsTill : spawnPoints.Count;

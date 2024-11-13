@@ -12,6 +12,8 @@ public class AttackGameManager : MonoBehaviour
     public
     GameStatusUI gameStatus;
 
+    public bool roundOver;
+
     private void Awake()
     {
         // Check if an instance already exists and destroy the new one if so
@@ -41,6 +43,10 @@ public class AttackGameManager : MonoBehaviour
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
     {
+        if (roundOver)
+        {
+            return;
+        }
         BennetWang.MovementSystem.PlayerActor[] playerBodys = { DimensionManager.Instance.players[0].body, DimensionManager.Instance.players[1].body };
 
         bool direction = (playerBodyKiller == playerBodys[0].gameObject);

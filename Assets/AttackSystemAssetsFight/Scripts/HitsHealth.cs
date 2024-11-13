@@ -13,8 +13,12 @@ public class HitsHealth : MonoBehaviour
     [SerializeField]
     Image[] hitsImages;
 
+    
+    [SerializeField] attackAnim attackAnim;
 
+    [SerializeField] float killDelay;
 
+    public GameObject pAttacker;
 
 
     // Start is called before the first frame update
@@ -32,21 +36,35 @@ public class HitsHealth : MonoBehaviour
     public void Hit(GameObject attacker)
     {
         hitsLeft--;
+        
+       
+       
         if (hitsLeft >= 0)
         {
-            updateUI();
+            attackAnim.DamageFlash();
+            //updateUI();
         }
 
         if (hitsLeft == 0)
         {
-            AttackGameManager.Instance.playerKilled(gameObject, attacker);
+            pAttacker = attacker;
+            AttackGameManager.Instance.roundOver = true;
+            Invoke("playerKill", killDelay);
+            
         }
     }
 
+
+    void playerKill()
+    {
+        AttackGameManager.Instance.roundOver = false;
+        AttackGameManager.Instance.playerKilled(gameObject, pAttacker);
+    }
     public void resetHealth()
     {
         hitsLeft = maxHits;
-        updateUI();
+        attackAnim.setBack();
+        //updateUI();
     }
 
     void updateUI()
