@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackPlayerCircleType : MonoBehaviour
 {
-    [SerializeField] Animator swordAnim;
+    [SerializeField] Animator spriteAnim;
     [SerializeField] float damage;
     [SerializeField] Transform attackPoint;
     [SerializeField] string playerTag;
@@ -20,6 +20,22 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     
     public Color winColor;
+
+
+    bool keyReleased;
+    bool holding;
+
+    float keyHoldTime;
+    bool attackAllowed;
+    float holdTime;
+    [SerializeField]
+    float maxHoldtime;
+    [SerializeField]
+    float minHoldTime;
+
+    bool keyPressed;
+    [SerializeField]
+    float keytoHoldRatio;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,18 +45,52 @@ public class AttackPlayerCircleType : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(attackKey))
+        if (Input.GetKeyDown(attackKey)&& !keyPressed)
         {
-            Attack();
+            keyPressed = true;
+            spriteAnim.SetTrigger("Hold");
+        }
+
+        if (Input.GetKey(attackKey))
+        {
+            keyHoldTime+=Time.deltaTime;
+        }
+        if (Input.GetKeyUp(attackKey))
+        {
+            keyReleased = true;
+        }
+
+        if (keyReleased && holding)
+        {
+            keyReleased = false;
+            spriteAnim.SetTrigger("Attack");
+            
         }
     }
 
 
-
-
-    void Attack()
+    public void holdDone()
     {
-        swordAnim.SetTrigger("Hit");
+        holding = true;
+        spriteAnim.SetBool("isHolding", true);
+    }
+    public void attackDone()
+    {
+        holdTime = keytoHoldRatio * keyHoldTime;
+        keyHoldTime = 0;
+        holdTime = Mathf.Clamp(holdTime, minHoldTime, maxHoldtime);
+        Invoke("stopHold", holdTime);
+    }
+
+
+    public void stopHold()
+    {
+        
+        spriteAnim.SetBool("isHolding", false);
+    }
+    public void Attack()
+    {
+        
 
         Collider2D[] hitPlayers =Physics2D.OverlapCircleAll(attackPoint.position, attackRadius);
 

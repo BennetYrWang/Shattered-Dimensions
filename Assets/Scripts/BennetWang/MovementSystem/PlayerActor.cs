@@ -34,6 +34,7 @@ namespace BennetWang.MovementSystem
                     FlipCharacter();
                 _facingRight = value;
             }
+
         }
         [SerializeField] private GravityType gravityDirection;
         public float gravityScale;
@@ -57,9 +58,10 @@ namespace BennetWang.MovementSystem
         public event OnMoveStart onMoveStart;
         public delegate void OnMoveEnd();
         public event OnMoveEnd onMoveEnd;
-
+        [SerializeField] private Animator spriteAnim;
         protected void Awake()
         {
+            
             controller = transform.parent.GetComponent<PlayerMovementController>();
             rb = GetComponent<Rigidbody2D>();
             rb.bodyType = RigidbodyType2D.Dynamic;
@@ -154,6 +156,7 @@ namespace BennetWang.MovementSystem
         
         public void ApplyHorizontalMove(float amount)
         {
+            
             rb.position += GetForwardDirection() * amount;
         }
     
