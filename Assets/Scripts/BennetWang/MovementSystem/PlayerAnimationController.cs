@@ -39,22 +39,24 @@ namespace BennetWang.MovementSystem
 
         void OnIllusionStartFalling()
         {
-            
+            illusionAnimator.SetBool("inAir", true);
         }
 
         void OnIllusionLanding()
         {
-            
+            illusionAnimator.SetBool("inAir", false);
         }
 
         void OnPlayerMoveStart()
         {
             bodyAnimator.SetBool("isMoving", true);
+            illusionAnimator.SetBool("isMoving", true);
         }
 
         void OnPlayerMoveStop()
         {
             bodyAnimator.SetBool("isMoving", false);
+            illusionAnimator.SetBool("isMoving", false);
         }
     }
 }
