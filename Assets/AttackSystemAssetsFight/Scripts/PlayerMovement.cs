@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;                 // To check if the player is on the ground
     private float groundCheckRadius = 0.2f;
 
+
+
     // Radius to check ground proximity
 
     private void Start()
