@@ -7,6 +7,23 @@ namespace BennetWang.MovementSystem
     public class PlayerActor : MonoBehaviour
     {
         // Movement
+        private bool _isMoving;
+
+        public bool IsMoving
+        {
+            get => _isMoving;
+            set
+            {
+                if (_isMoving == value)
+                    return;
+                _isMoving = value;
+                if (_isMoving)
+                    onMoveStart?.Invoke();
+                else
+                    onMoveEnd?.Invoke();
+            }
+        }
+
         private bool _facingRight;
         public bool FacingRight
         {
@@ -32,8 +49,14 @@ namespace BennetWang.MovementSystem
         // Private Variables
         private List<RaycastHit2D> raycastHitsCache = new(5);
 
+        // Delegates
+        public delegate void OnInAirBegin();
+        public event OnInAirBegin onFallingBegin;
+        public delegate void OnMoveStart();
 
-        
+        public event OnMoveStart onMoveStart;
+        public delegate void OnMoveEnd();
+        public event OnMoveEnd onMoveEnd;
 
         protected void Awake()
         {
@@ -93,12 +116,18 @@ namespace BennetWang.MovementSystem
             //Check for jumping
             raycastHitsCache.Clear();
             rb.Cast(GetGravityDirection(), raycastHitsCache, 0.01f);
-            inAir = true;
+            
+            bool landed = false;
             foreach (RaycastHit2D hit in raycastHitsCache)
             {
                 if (hit.collider.CompareTag("LandScape"))
-                    inAir = false;
+                    landed = true;
             }
+
+            if (!(landed || inAirs))
+                onFallingBegin?.Invoke();
+
+            inAir = !landed;
             doubleJumped = inAir && doubleJumped;
         }
 
@@ -151,6 +180,7 @@ namespace BennetWang.MovementSystem
             var scale = transform.localScale;
             transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
         }
+        
 
         public void setPosition(Vector3 pos)
         {
