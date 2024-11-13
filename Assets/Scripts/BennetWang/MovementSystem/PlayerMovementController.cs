@@ -127,7 +127,7 @@ namespace BennetWang.MovementSystem
                 if (Input.GetKey(rightKey))
                 {
                     horizontalMove += moveSpeed;
-                    illusion.FacingRight = true;
+                    body.FacingRight = true;
                     if (_dualExistence)
                         illusion.FacingRight = true;
                 }
