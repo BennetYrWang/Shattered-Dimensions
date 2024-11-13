@@ -1,4 +1,5 @@
-﻿using BennetWang.Util;
+﻿using System;
+using BennetWang.Util;
 using BennetWang.Module.Timer;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -60,6 +61,7 @@ namespace BennetWang.MovementSystem
                 illusion.gameObject.SetActive(value);
             }
         }
+
 
         private void Update()
         {

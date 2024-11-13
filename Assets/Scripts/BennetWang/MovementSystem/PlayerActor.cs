@@ -11,6 +11,7 @@ namespace BennetWang.MovementSystem
 
         public bool IsMoving { get; set; }
 
+        [SerializeField] private bool startWithFacingRight;
         private bool _facingRight;
         public bool FacingRight
         {
@@ -48,6 +49,8 @@ namespace BennetWang.MovementSystem
         [SerializeField] private Animator spriteAnim;
         protected void Awake()
         {
+            _facingRight = true;
+            FacingRight = startWithFacingRight;
             
             controller = transform.parent.GetComponent<PlayerMovementController>();
             rb = GetComponent<Rigidbody2D>();
