@@ -18,6 +18,7 @@ namespace BennetWang.MovementSystem
         public float moveSpeed = 5f;
         public float jumpVelocity = 7f;
         public float dashSpeed = 10f;
+        private bool prevIsMoving = false;
         
         [Header("Dash State")]
         public bool isDashing = false;
@@ -39,6 +40,12 @@ namespace BennetWang.MovementSystem
         private Timer dashDurationTimer;
         private Timer dashRecoveryTimer;
         
+        
+        public delegate void OnMoveStart();
+
+        public event OnMoveStart onMoveStart;
+        public delegate void OnMoveEnd();
+        public event OnMoveEnd onMoveStop;
         
         
         
@@ -82,10 +89,23 @@ namespace BennetWang.MovementSystem
             float horizontalMove = 0;
             CalculateHorizontalMove();
 
-            if (body.CanMoveHorizontally(horizontalMove) && illusion.CanMoveHorizontally(horizontalMove))
+            if (horizontalMove != 0 && body.CanMoveHorizontally(horizontalMove) && illusion.CanMoveHorizontally(horizontalMove))
             {
                 body.ApplyHorizontalMove(horizontalMove);
                 illusion.ApplyHorizontalMove(horizontalMove);
+                if (!prevIsMoving)
+                {
+                    onMoveStart?.Invoke();
+                    prevIsMoving = true;
+                }
+            }
+            else
+            {
+                if (prevIsMoving)
+                {
+                    onMoveStop?.Invoke();
+                    prevIsMoving = false;
+                }
             }
 
             if (Input.GetKeyDown(jumpKey))

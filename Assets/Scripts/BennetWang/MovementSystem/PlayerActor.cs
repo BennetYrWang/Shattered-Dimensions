@@ -9,20 +9,7 @@ namespace BennetWang.MovementSystem
         // Movement
         private bool _isMoving;
 
-        public bool IsMoving
-        {
-            get => _isMoving;
-            set
-            {
-                if (_isMoving == value)
-                    return;
-                _isMoving = value;
-                if (_isMoving)
-                    onMoveStart?.Invoke();
-                else
-                    onMoveEnd?.Invoke();
-            }
-        }
+        public bool IsMoving { get; set; }
 
         private bool _facingRight;
         public bool FacingRight
@@ -53,11 +40,6 @@ namespace BennetWang.MovementSystem
         // Delegates
         public delegate void OnInAirBegin();
         public event OnInAirBegin onFallingBegin;
-        public delegate void OnMoveStart();
-
-        public event OnMoveStart onMoveStart;
-        public delegate void OnMoveEnd();
-        public event OnMoveEnd onMoveEnd;
         [SerializeField] private Animator spriteAnim;
         protected void Awake()
         {
@@ -126,7 +108,7 @@ namespace BennetWang.MovementSystem
                     landed = true;
             }
 
-            if (!(landed || inAirs))
+            if (!(landed || inAir))
                 onFallingBegin?.Invoke();
 
             inAir = !landed;
