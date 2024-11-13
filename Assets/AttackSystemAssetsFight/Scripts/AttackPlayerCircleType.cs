@@ -28,7 +28,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     bool holding;
 
     float keyHoldTime;
-    bool attackAllowed;
+    bool attacked;
     float holdTime;
     [SerializeField]
     float maxHoldtime;
@@ -51,24 +51,33 @@ public class AttackPlayerCircleType : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(attackKey) && !holding && !pressStart )
+        if (Input.GetKeyDown(attackKey) && !holding  )
         {
-            pressStart = true;
-            keyReleased = false;
-            spriteAnim.SetTrigger("Hold");
+            if (!pressStart)
+            {
+                pressStart = true;
+                keyReleased = false;
+                spriteAnim.SetTrigger("Hold");
+            }
+            else if(pressStart && !attacked)
+            {
+                keyReleased = false;
+            }
+            
         }
 
-        if (Input.GetKey(attackKey))
+        if (Input.GetKey(attackKey)&&pressStart&&!holding)
         {
             keyHoldTime+=Time.deltaTime;
         }
-        if (Input.GetKeyUp(attackKey))
+        if (Input.GetKeyUp(attackKey)&&pressStart)
         {
             keyReleased = true;
         }
 
-        if (keyReleased && holding)
+        if (keyReleased && holding &&!attacked)
         {
+            attacked = true;
             keyReleased = false;
             spriteAnim.SetTrigger("Attack");
             
@@ -81,10 +90,12 @@ public class AttackPlayerCircleType : MonoBehaviour
         mySpr.color = holdingCol;
         holding = true;
         spriteAnim.SetBool("isHolding", true);
+        
     }
 
     public void attackDone()
     {
+        
         attackCol.hitEnd();
         mySpr.color = hitCol;
         mySpr.color = normalCol;
@@ -99,6 +110,7 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void stopHold()
     {
+        attacked=false;
         mySpr.color = normalCol;
         keyHoldTime = 0;
         pressStart = false;

@@ -93,10 +93,7 @@ public class DimensionManager : MonoBehaviour
        
        
 
-        for(int i=0; i < dimensions.Count; i++)
-        {
-            dimensions[i].gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);
-        }
+      
 
         currentDimension = -1;
         changeDimension(true);
@@ -179,6 +176,10 @@ public class DimensionManager : MonoBehaviour
 
         player2Illusion = dimensions[rightDimension];
 
+        for (int i = 0; i < dimensions.Count; i++)
+        {
+            dimensions[i].gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);
+        }
 
         player1Illusion.SetAsDimension(Dimension.SpecialDimension.Player1Illusion);
         player1Illusion.gameObject.GetComponent<DimensionWin>().setAlpha(lowAlpha);

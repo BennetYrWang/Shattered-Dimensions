@@ -7,11 +7,15 @@ public class DimensionWin : MonoBehaviour
     
     List<SpriteRenderer> allSprites;
     SpriteRenderer[] spritesChild;
+
+    Color normColor;
     // Start is called before the first frame update
     void Awake()
     {
         spritesChild = GetComponentsInChildren<SpriteRenderer>();
         //CollectChildSpriteRenderers();
+
+        normColor = spritesChild[0].color;
     }
 
 
@@ -67,6 +71,10 @@ public class DimensionWin : MonoBehaviour
 
     public void changeToWinnerColor(Color winCol)
     {
+        if (winCol == Color.white)
+        {
+            winCol = normColor;
+        }
         //CollectChildSpriteRenderers();
         SpriteRenderer sp;
        for(int i=0;i<spritesChild.Length;i++){

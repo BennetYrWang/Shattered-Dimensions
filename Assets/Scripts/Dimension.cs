@@ -5,7 +5,7 @@ public class Dimension : MonoBehaviour
     [SerializeField] private int index;
     public int Index => index;
 
-
+   
     public void SetAsDimension(SpecialDimension dimension)
     {
         int layer = 0;
