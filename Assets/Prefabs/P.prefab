@@ -10844,7 +10844,7 @@ MonoBehaviour:
   hitCol: {r: 0, g: 0, b: 0, a: 0}
   normalCol: {r: 0.5254902, g: 0.9411765, b: 1, a: 1}
   mySpr: {fileID: 3231485193240158304}
-  maxHoldtime: 3
+  maxHoldtime: 5
   minHoldTime: 1
   keytoHoldRatio: 0.5
   attackCol: {fileID: 8921644756986033963}

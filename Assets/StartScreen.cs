@@ -18,7 +18,11 @@ public class StartScreen : MonoBehaviour
      if(Input.GetKey(KeyCode.Space))
         {
             SceneManager.LoadScene(gameScreen);
-        }  
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
 }

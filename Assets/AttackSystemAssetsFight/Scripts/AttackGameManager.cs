@@ -40,10 +40,12 @@ public class AttackGameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-       if(gameWon && Input.GetKeyDown(KeyCode.Space))
+       if((gameWon && Input.GetKeyDown(KeyCode.Space))|| Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("StartScreen");
         }
+
+       
     }
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
