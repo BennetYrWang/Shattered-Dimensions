@@ -23,7 +23,7 @@ namespace BennetWang
         public bool SfxActive = true;
         public static SoundManager Instance { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
             audioSource.clip = duelBgm;
@@ -86,7 +86,11 @@ namespace BennetWang
                     volume = blueSwitchVolume;
                     break;
             }
-            
+
+            if (audioSource == null)
+            {
+                return;
+            }
             audioSource.PlayOneShot(audioClip, volume);
         }
         public enum Clip

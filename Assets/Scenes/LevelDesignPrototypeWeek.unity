@@ -363,7 +363,7 @@ MonoBehaviour:
   players:
   - {fileID: 1407186550}
   - {fileID: 696929966}
-  lowAlpha: 0.85
+  lowAlpha: 0.4
   winningStreak: 0
 --- !u!1 &197509352
 GameObject:
