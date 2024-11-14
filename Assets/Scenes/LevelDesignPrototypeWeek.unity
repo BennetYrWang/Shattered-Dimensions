@@ -6452,7 +6452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1675241435}
-  duelBgm: {fileID: 8300000, guid: 40c7800101ca2f04e8e0334e7195a5bb, type: 3}
+  duelBgm: {fileID: 8300000, guid: ab8f07ac427f85d4588499885ac0b733, type: 3}
   duelChangedBgm: {fileID: 8300000, guid: ab8f07ac427f85d4588499885ac0b733, type: 3}
   finalBattalBgm: {fileID: 8300000, guid: 5292e410fe5ef2f4980c0a50a3b2b7d2, type: 3}
   landing: {fileID: 8300000, guid: dadabcd0761785b4aa332b980b803169, type: 3}
