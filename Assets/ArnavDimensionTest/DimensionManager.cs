@@ -116,7 +116,17 @@ public class DimensionManager : MonoBehaviour
 
         if (inLoop)
         {
-            //SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.Duel);
+            // Normal duel
+            foreach (var player in players)
+            {
+                var bodyScale = player.body.transform.localScale;
+                var illusionScale = player.illusion.transform.localScale;
+
+                player.body.transform.localScale = new Vector3(Mathf.Sign(bodyScale.x),Mathf.Sign(bodyScale.y),Mathf.Sign(bodyScale.z));
+                player.illusion.transform.localScale = new Vector3(Mathf.Sign(illusionScale.x),Mathf.Sign(illusionScale.y),Mathf.Sign(illusionScale.z));
+            }
+            
+            SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.Duel);
             if (next) 
                 currentDimension = (currentDimension + 1) % loopingDimensionsTill;
             else
@@ -126,10 +136,19 @@ public class DimensionManager : MonoBehaviour
        
         else
         {
-            //SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.FinalBattle);
+            // Final duel
+            foreach (var player in players)
+            {
+                var bodyScale = player.body.transform.localScale;
+                var illusionScale = player.illusion.transform.localScale;
+
+                player.body.transform.localScale = new Vector3(Mathf.Sign(bodyScale.x) * .2f,Mathf.Sign(bodyScale.y)*.2f,Mathf.Sign(bodyScale.z)*.2f);
+                player.illusion.transform.localScale = new Vector3(Mathf.Sign(illusionScale.x)* .2f,Mathf.Sign(illusionScale.y)* .2f,Mathf.Sign(illusionScale.z)* .2f);
+            }
+            
+            SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.FinalBattle);
             if (winningStreak == loopingDimensionsTill)
             {
-
                 currentDimension = loopingDimensionsTill;
             }
             else

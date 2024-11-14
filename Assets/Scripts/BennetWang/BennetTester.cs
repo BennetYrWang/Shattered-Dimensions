@@ -1,5 +1,6 @@
 ﻿using System;
 using BennetWang.Module.Timer;
+using UnityEditor;
 using UnityEngine;
 
 namespace BennetWang
@@ -8,8 +9,7 @@ namespace BennetWang
     {
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-                SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.FootStep);
+            print(LayerMask.LayerToName(gameObject.layer));
         }
     }
 }
