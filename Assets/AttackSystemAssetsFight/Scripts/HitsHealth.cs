@@ -41,15 +41,20 @@ public class HitsHealth : MonoBehaviour
        
         if (hitsLeft >= 0)
         {
-            attackAnim.DamageFlash();
+            //attackAnim.DamageFlash();
             //updateUI();
         }
 
         if (hitsLeft == 0)
         {
             pAttacker = attacker;
-            AttackGameManager.Instance.roundOver = true;
-            Invoke("playerKill", killDelay);
+            if (!AttackGameManager.Instance.roundOver)
+            {
+                attackAnim.DamageFlash();
+                AttackGameManager.Instance.roundOver = true;
+                Invoke("playerKill", killDelay);
+            }
+           
             
         }
     }
