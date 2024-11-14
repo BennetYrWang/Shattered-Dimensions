@@ -35,6 +35,7 @@ namespace BennetWang.MovementSystem
         [Header("References")]
         public PlayerActor body, illusion;
         [SerializeField] private TrailRenderer bodyTrail, illusionTrail;
+        [SerializeField] private ParticleSystem illusionCollisionParticle;
         
         //Timers
         private Timer doubleClickTimer;
@@ -62,6 +63,10 @@ namespace BennetWang.MovementSystem
             }
         }
 
+        private void Start()
+        {
+            illusionCollisionParticle.Stop();
+        }
 
         private void Update()
         {
@@ -89,20 +94,16 @@ namespace BennetWang.MovementSystem
         
         private void UpdateMoveInputs()
         {
+            if (Input.GetKeyDown(jumpKey))
+            {
+                body.Jump(jumpVelocity);
+                illusion.Jump(jumpVelocity);
+            }
+            
             float horizontalMove = 0;
             CalculateHorizontalMove();
 
-            if (horizontalMove != 0 && body.CanMoveHorizontally(horizontalMove) && illusion.CanMoveHorizontally(horizontalMove))
-            {
-                body.ApplyHorizontalMove(horizontalMove);
-                illusion.ApplyHorizontalMove(horizontalMove);
-                if (!prevIsMoving)
-                {
-                    onMoveStart?.Invoke();
-                    prevIsMoving = true;
-                }
-            }
-            else
+            if (horizontalMove == 0)
             {
                 if (prevIsMoving)
                 {
@@ -110,11 +111,36 @@ namespace BennetWang.MovementSystem
                     prevIsMoving = false;
                 }
             }
-
-            if (Input.GetKeyDown(jumpKey))
+            else
             {
-                body.Jump(jumpVelocity);
-                illusion.Jump(jumpVelocity);
+                bool illusionCanMove = illusion.CanMoveHorizontally(horizontalMove);
+                if (!illusionCanMove)
+                {
+                    
+                    if (prevIsMoving)
+                    {
+                        onMoveStop?.Invoke();
+                        prevIsMoving = false;
+                    }
+                    return;
+                }
+                bool bodyCanMove = body.CanMoveHorizontally(horizontalMove);
+                if (!bodyCanMove)
+                {
+                    if (prevIsMoving)
+                    {
+                        onMoveStop?.Invoke();
+                        prevIsMoving = false;
+                    }
+                    return;
+                }
+                body.ApplyHorizontalMove(horizontalMove);
+                illusion.ApplyHorizontalMove(horizontalMove);
+                if (!prevIsMoving)
+                {
+                    onMoveStart?.Invoke();
+                    prevIsMoving = true;
+                }
             }
             
             void  CalculateHorizontalMove()

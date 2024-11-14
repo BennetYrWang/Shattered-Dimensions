@@ -35,6 +35,7 @@ namespace BennetWang.MovementSystem
         void OnBodyLanding()
         {
             bodyAnimator.SetBool("inAir", false);
+            SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.JumpLanding);
         }
 
         void OnIllusionStartFalling()

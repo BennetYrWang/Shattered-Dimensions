@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BennetWang;
 using BennetWang.MovementSystem;
 using UnityEngine;
 
@@ -115,6 +116,7 @@ public class DimensionManager : MonoBehaviour
 
         if (inLoop)
         {
+            //SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.Duel);
             if (next) 
                 currentDimension = (currentDimension + 1) % loopingDimensionsTill;
             else
@@ -124,6 +126,7 @@ public class DimensionManager : MonoBehaviour
        
         else
         {
+            //SoundManager.Instance.PlayBackgroundMusic(SoundManager.BackgroundMusic.FinalBattle);
             if (winningStreak == loopingDimensionsTill)
             {
 
