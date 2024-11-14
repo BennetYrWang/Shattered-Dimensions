@@ -116,6 +116,7 @@ namespace BennetWang.MovementSystem
                 bool illusionCanMove = illusion.CanMoveHorizontally(horizontalMove);
                 if (!illusionCanMove)
                 {
+                    illusionCollisionParticle.Play();
                     
                     if (prevIsMoving)
                     {

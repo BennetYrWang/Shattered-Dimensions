@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelDesignPrototypeWeek.unity
     guid: fd9da84b0d0884936b053d66a53ef3a3
+  - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: 993365596df884257b7cb318dbc9c97d
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

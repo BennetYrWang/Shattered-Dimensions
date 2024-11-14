@@ -11,8 +11,10 @@ namespace BennetWang
         [SerializeField] private AudioClip duelChangedBgm ,finalBattalBgm;
         [Header("SFX")] [SerializeField] private AudioClip landing;
         [SerializeField] private float landingVolume;
-        [SerializeField] private AudioClip step;
-        [SerializeField] private float stepVolume;
+        [SerializeField] private AudioClip jump;
+        [SerializeField] private float jumpVolume;
+        [SerializeField] private AudioClip hit;
+        [SerializeField] private float hitVolume;
         
         public bool SfxActive = true;
         public static SoundManager Instance { get; private set; }
@@ -59,9 +61,17 @@ namespace BennetWang
             {
                 case Clip.FootStep :
                     break;
+                case Clip.Jump:
+                    audioClip = jump;
+                    volume = jumpVolume;
+                    break;
                 case Clip.JumpLanding:
                     audioClip = landing;
                     volume = landingVolume;
+                    break;
+                case Clip.HitSound:
+                    audioClip = hit;
+                    volume = hitVolume;
                     break;
             }
             
@@ -71,7 +81,9 @@ namespace BennetWang
         {
             FootStep,
             HitGround,
-            JumpLanding
+            JumpLanding,
+            HitSound,
+            Jump
         }
 
         public enum BackgroundMusic

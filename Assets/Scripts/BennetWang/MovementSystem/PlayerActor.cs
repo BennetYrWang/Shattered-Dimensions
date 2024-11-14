@@ -159,7 +159,7 @@ namespace BennetWang.MovementSystem
             doubleJumped = inAir;
             inAir = true;
             
-            SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.JumpLanding);
+            SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.Jump);
         }
 
  

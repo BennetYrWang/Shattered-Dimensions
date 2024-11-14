@@ -803,7 +803,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 16
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4919,7 +4919,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4
+    OrthographicSize: 16
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -6456,9 +6456,11 @@ MonoBehaviour:
   duelChangedBgm: {fileID: 8300000, guid: ab8f07ac427f85d4588499885ac0b733, type: 3}
   finalBattalBgm: {fileID: 8300000, guid: 5292e410fe5ef2f4980c0a50a3b2b7d2, type: 3}
   landing: {fileID: 8300000, guid: dadabcd0761785b4aa332b980b803169, type: 3}
-  landingVolume: 0.5
-  step: {fileID: 0}
-  stepVolume: 0
+  landingVolume: 0.15
+  jump: {fileID: 0}
+  jumpVolume: 0.5
+  hit: {fileID: 8300000, guid: 18aa46b5187da7a48a0ea4ee7dd47e29, type: 3}
+  hitVolume: 0.3
   SfxActive: 1
 --- !u!82 &1675241435
 AudioSource:
