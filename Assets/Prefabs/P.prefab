@@ -10724,7 +10724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWithFacingRight: 0
   gravityDirection: 0
-  gravityScale: 2.5
+  gravityScale: 3
   controller: {fileID: 0}
   spriteAnim: {fileID: 0}
 --- !u!50 &6502312914508129652
@@ -10956,7 +10956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWithFacingRight: 0
   gravityDirection: 2
-  gravityScale: 2
+  gravityScale: 4
   controller: {fileID: 2482604582724910569}
   spriteAnim: {fileID: 0}
 --- !u!50 &3423385175000412255
@@ -11060,7 +11060,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.875, y: 0.875, z: 0.875}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1576757398967654269}
@@ -11084,7 +11084,7 @@ MonoBehaviour:
   jumpKey: 273
   inputAllowed: 1
   moveSpeed: 7
-  jumpVelocity: 12
+  jumpVelocity: 13
   dashSpeed: 40
   isDashing: 0
   dashRecovered: 1

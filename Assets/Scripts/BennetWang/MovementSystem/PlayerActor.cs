@@ -158,6 +158,8 @@ namespace BennetWang.MovementSystem
             rb.velocity = GetGravityDirection() * -jumpVelocity;
             doubleJumped = inAir;
             inAir = true;
+            
+            SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.JumpLanding);
         }
 
  

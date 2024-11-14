@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using BennetWang;
 using BennetWang.MovementSystem;
+using Cinemachine;
 using UnityEngine;
 
 public class DimensionManager : MonoBehaviour
 {
+    public CinemachineVirtualCamera camera;
     public static DimensionManager Instance { get; private set; }
     List<Dimension> dimensions;
 
@@ -45,6 +47,8 @@ public class DimensionManager : MonoBehaviour
         // Assign this instance as the singleton instance and make it persistent
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        camera = FindAnyObjectByType<CinemachineVirtualCamera>();
     }
 
 
@@ -117,6 +121,7 @@ public class DimensionManager : MonoBehaviour
         if (inLoop)
         {
             // Normal duel
+            camera.m_Lens.OrthographicSize = 16f;
             foreach (var player in players)
             {
                 var bodyScale = player.body.transform.localScale;
@@ -137,6 +142,7 @@ public class DimensionManager : MonoBehaviour
         else
         {
             // Final duel
+            camera.m_Lens.OrthographicSize = 4f;
             foreach (var player in players)
             {
                 var bodyScale = player.body.transform.localScale;
