@@ -15,6 +15,10 @@ namespace BennetWang
         [SerializeField] private float jumpVolume;
         [SerializeField] private AudioClip hit;
         [SerializeField] private float hitVolume;
+        [SerializeField] private AudioClip redSwitch;
+        [SerializeField] private float redSwitchVolume;
+        [SerializeField] private AudioClip blueSwitch;
+        [SerializeField] private float blueSwitchVolume;
         
         public bool SfxActive = true;
         public static SoundManager Instance { get; private set; }
@@ -73,6 +77,14 @@ namespace BennetWang
                     audioClip = hit;
                     volume = hitVolume;
                     break;
+                case Clip.RedSwitch:
+                    audioClip = redSwitch;
+                    volume = redSwitchVolume;
+                    break;
+                case Clip.BlueSwitch:
+                    audioClip = blueSwitch;
+                    volume = blueSwitchVolume;
+                    break;
             }
             
             audioSource.PlayOneShot(audioClip, volume);
@@ -83,7 +95,9 @@ namespace BennetWang
             HitGround,
             JumpLanding,
             HitSound,
-            Jump
+            Jump,
+            RedSwitch,
+            BlueSwitch
         }
 
         public enum BackgroundMusic

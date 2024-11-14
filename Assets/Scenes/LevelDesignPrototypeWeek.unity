@@ -6461,6 +6461,10 @@ MonoBehaviour:
   jumpVolume: 0.5
   hit: {fileID: 8300000, guid: 18aa46b5187da7a48a0ea4ee7dd47e29, type: 3}
   hitVolume: 0.3
+  redSwitch: {fileID: 8300000, guid: 68e92ad27d824a44cacd76491fb234d6, type: 3}
+  redSwitchVolume: 0.8
+  blueSwitch: {fileID: 8300000, guid: 76c9768be78f5214198aeeec9bb874a4, type: 3}
+  blueSwitchVolume: 0.8
   SfxActive: 1
 --- !u!82 &1675241435
 AudioSource:
@@ -6477,7 +6481,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
