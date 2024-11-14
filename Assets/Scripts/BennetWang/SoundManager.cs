@@ -26,11 +26,6 @@ namespace BennetWang
             
         }
 
-        private void Update()
-        {
-
-            audioSource.clip = finalBattalBgm;
-        }
 
         public void PlayBackgroundMusic(BackgroundMusic music)
         {
