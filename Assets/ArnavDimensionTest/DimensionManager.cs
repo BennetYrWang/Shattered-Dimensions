@@ -120,6 +120,14 @@ public class DimensionManager : MonoBehaviour
 
         if (inLoop)
         {
+            if (next)
+            {
+                SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.BlueSwitch);
+            }
+                else
+            {
+                SoundManager.Instance.PlaySoundEffect(SoundManager.Clip.RedSwitch);
+            }
             // Normal duel
             camera.m_Lens.OrthographicSize = 16f;
             foreach (var player in players)
