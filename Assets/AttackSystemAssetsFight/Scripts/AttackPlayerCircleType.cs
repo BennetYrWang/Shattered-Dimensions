@@ -22,7 +22,7 @@ public class AttackPlayerCircleType : MonoBehaviour
     CinemachineImpulseSource impulseSource;
     public Color winColor;
 
-    [SerializeField] Color holdingCol, hitCol;
+    [SerializeField] Color bodyHold,holdingCol, hitCol;
     public Color normalCol;
     [SerializeField] SpriteRenderer mySpr;
 
@@ -51,6 +51,8 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField] float lightMulti;
 
     Color lightBase;
+
+    
 
    
     // Start is called before the first frame update
@@ -101,7 +103,7 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void holdDone()
     {
-        mySpr.color = holdingCol;
+        mySpr.color = bodyHold;
         playerLight.color = holdingCol;
         playerLight.intensity = startIntensity * lightMulti;
         holding = true;

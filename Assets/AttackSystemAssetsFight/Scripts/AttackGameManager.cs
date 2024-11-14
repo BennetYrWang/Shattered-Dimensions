@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AttackGameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class AttackGameManager : MonoBehaviour
 
     public bool roundOver;
 
+    bool gameWon;
     private void Awake()
     {
         // Check if an instance already exists and destroy the new one if so
@@ -38,7 +40,10 @@ public class AttackGameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-       
+       if(gameWon && Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("StartScreen");
+        }
     }
 
     public void playerKilled(GameObject playerBodyDead, GameObject playerBodyKiller)
@@ -68,6 +73,7 @@ public class AttackGameManager : MonoBehaviour
             if (killerPlayer.dimensionStreak >= DimensionManager.Instance.totalDimensions)
             {
                 Debug.Log("GameWonnnnw");
+                gameWon = true;
                 winScreen.gameWon(killerPlayer.fightName, killerPlayer.winColor);
             }
             else
