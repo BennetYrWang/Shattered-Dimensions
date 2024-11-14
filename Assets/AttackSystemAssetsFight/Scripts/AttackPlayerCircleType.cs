@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using Cinemachine;
 
 public class AttackPlayerCircleType : MonoBehaviour
 {
@@ -17,7 +19,7 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public int dimensionStreak;
 
-    
+    CinemachineImpulseSource impulseSource;
     public Color winColor;
 
     [SerializeField] Color holdingCol, hitCol;
@@ -42,9 +44,21 @@ public class AttackPlayerCircleType : MonoBehaviour
     [SerializeField] AttackBox attackCol;
 
     [SerializeField] float downForce;
+
+    [SerializeField] Light2D playerLight;
+
+    float startIntensity;
+    [SerializeField] float lightMulti;
+
+    Color lightBase;
+
+   
     // Start is called before the first frame update
     void Start()
     {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+        startIntensity = playerLight.intensity;
+        lightBase = playerLight.color;
         normalCol = mySpr.color;
     }
 
@@ -88,6 +102,8 @@ public class AttackPlayerCircleType : MonoBehaviour
     public void holdDone()
     {
         mySpr.color = holdingCol;
+        playerLight.color = holdingCol;
+        playerLight.intensity = startIntensity * lightMulti;
         holding = true;
         spriteAnim.SetBool("isHolding", true);
         
@@ -95,10 +111,14 @@ public class AttackPlayerCircleType : MonoBehaviour
 
     public void attackDone()
     {
-        
+        impulseSource.GenerateImpulse();
         attackCol.hitEnd();
         mySpr.color = hitCol;
         mySpr.color = normalCol;
+
+        playerLight.color = lightBase;
+        playerLight.intensity = startIntensity;
+
         transform.parent.GetComponent<BennetWang.MovementSystem.PlayerMovementController>().inputAllowed = false ;
         holdTime = keytoHoldRatio * keyHoldTime;
         holdTime = Mathf.Clamp(holdTime, minHoldTime, maxHoldtime);
