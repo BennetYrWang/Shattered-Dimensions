@@ -11,6 +11,7 @@ public class AttackBox : MonoBehaviour
     [SerializeField] float verticalMove;
     [SerializeField] ParticleSystem playerHit;
     [SerializeField] ParticleSystem groundHit;
+    [SerializeField] GameObject trail;
 
     bool hitOther;
     // Start is called before the first frame update
@@ -53,6 +54,24 @@ public class AttackBox : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && collision.gameObject != transform.parent.gameObject&&canDamage)
         {
+            float distance = (transform.parent.position - collision.gameObject.transform.position).magnitude;
+            Vector2 direction = -(trail.transform.position - collision.gameObject.transform.position).normalized;
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(trail.transform.position, direction, distance);
+
+
+            foreach (RaycastHit2D hit in hits)
+            {
+               
+                if (hit.collider.gameObject.CompareTag("LandScape") && hit.collider.gameObject.name.Substring(0, 1) == "G")
+                {
+                    
+                    return;
+                }
+            }
+
+            
+
             hitOther = true;
             hitEnd();
             HitsHealth currentHealth = collision.gameObject.GetComponent<HitsHealth>();

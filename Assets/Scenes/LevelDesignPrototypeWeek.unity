@@ -1846,6 +1846,30 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.key1.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.28627455
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.4204435
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.84961337
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2124010859102523081, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -8493,6 +8517,18 @@ PrefabInstance:
     - target: {fileID: 600334800383228552, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_PreviewTimeScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    - target: {fileID: 718416657332607914, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
+      propertyPath: m_Parameters.colorGradient.atime0
+      value: 386
       objectReference: {fileID: 0}
     - target: {fileID: 2124010859102523081, guid: 64c8cef7d5bc94f04ba8e741472ed178, type: 3}
       propertyPath: m_Layer
