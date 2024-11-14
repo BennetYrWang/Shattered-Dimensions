@@ -91,7 +91,7 @@ public class AttackPlayerCircleType : MonoBehaviour
             keyReleased = true;
         }
 
-        if (keyReleased && holding &&!attacked)
+        if (keyReleased && holding &&!attacked && !AttackGameManager.Instance.roundOver)
         {
             attacked = true;
             keyReleased = false;
