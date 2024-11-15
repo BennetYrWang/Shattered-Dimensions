@@ -87,10 +87,7 @@ namespace BennetWang
                     break;
             }
 
-            if (audioSource == null)
-            {
-                return;
-            }
+           
             audioSource.PlayOneShot(audioClip, volume);
         }
         public enum Clip

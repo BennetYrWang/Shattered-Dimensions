@@ -107,12 +107,12 @@ namespace BennetWang.MovementSystem
             
             //Check for jumping
             raycastHitsCache.Clear();
-            rb.Cast(GetGravityDirection(), raycastHitsCache, 0.01f);
+            rb.Cast(GetGravityDirection(), raycastHitsCache, 0.02f);
             
             bool landed = false;
             foreach (RaycastHit2D hit in raycastHitsCache)
             {
-                if (hit.collider.CompareTag("LandScape"))
+                if (hit.collider.CompareTag("LandScape") || hit.collider.CompareTag("Player"))
                     landed = true;
             }
             if (!(landed || inAir))

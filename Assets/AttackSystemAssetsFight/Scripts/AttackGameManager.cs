@@ -27,7 +27,7 @@ public class AttackGameManager : MonoBehaviour
 
         // Assign this instance as the singleton instance and make it persistent
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     // Start is called before the first frame update

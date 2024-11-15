@@ -46,7 +46,7 @@ public class DimensionManager : MonoBehaviour
 
         // Assign this instance as the singleton instance and make it persistent
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+       
 
         camera = FindAnyObjectByType<CinemachineVirtualCamera>();
     }
